@@ -35,29 +35,38 @@ export function useScrollChoreography(scope: React.RefObject<HTMLElement | null>
         const q = gsap.utils.selector(scope);
 
         q("[data-words]").forEach((el) => {
-          gsap.from(el.querySelectorAll("[data-word]"), {
-            yPercent: 115,
-            duration: 1.1,
-            ease: EASE_OUT,
-            stagger: 0.045,
-            scrollTrigger: { trigger: el, start: "top 88%", once: true },
-          });
+          const words = el.querySelectorAll("[data-word]");
+          gsap.fromTo(
+            words,
+            { yPercent: 115 },
+            {
+              yPercent: 0,
+              duration: 1.1,
+              ease: EASE_OUT,
+              stagger: 0.045,
+              // clamp(): words near the very bottom of the page still trigger at max scroll.
+              scrollTrigger: { trigger: el, start: "clamp(top 88%)", once: true },
+              onStart: () => gsap.set(words, { opacity: 1 }),
+            },
+          );
         });
 
         ScrollTrigger.batch(q("[data-rise]"), {
-          start: "top 90%",
+          start: "clamp(top 90%)",
           once: true,
           onEnter: (batch) => {
             // A long jump (an anchor link, a restored scroll position) can deliver dozens of
             // elements at once, most of them already above the screen. Those just appear;
             // only what is on screen rises, and the stagger is capped so nothing waits long.
             const onScreen = batch.filter((el) => el.getBoundingClientRect().bottom > 0);
+            const passed = batch.filter((el) => !onScreen.includes(el));
+            if (passed.length) gsap.set(passed, { autoAlpha: 1 });
             if (!onScreen.length) return;
             // The signature "abox" reveal: rise from 10vw below and un-squash from scaleY(1.2).
             // The second card of a pair lags 0.15s; long batches share at most half a second.
             const stagger = Math.min(0.15, 0.5 / onScreen.length);
-            gsap.from(onScreen, { y: "10vw", scaleY: 1.2, duration: 0.71, ease: "power2.out", stagger, overwrite: true, clearProps: "transform" });
-            gsap.from(onScreen, { autoAlpha: 0, duration: 0.51, ease: "none", stagger });
+            gsap.fromTo(onScreen, { y: "10vw", scaleY: 1.2 }, { y: 0, scaleY: 1, duration: 0.71, ease: "power2.out", stagger, overwrite: true, clearProps: "transform" });
+            gsap.fromTo(onScreen, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.51, ease: "none", stagger });
           },
         });
 
@@ -103,7 +112,25 @@ export function useScrollChoreography(scope: React.RefObject<HTMLElement | null>
           });
         });
       });
-      return () => mm.revert();
+
+      // Reveal targets that mount later (a tab switch, a filter) were not scanned above:
+      // show them straight away rather than leave them hidden.
+      const root = scope.current;
+      const mo = root
+        ? new MutationObserver((records) => {
+            for (const r of records)
+              r.addedNodes.forEach((n) => {
+                if (!(n instanceof HTMLElement)) return;
+                const els = [n, ...n.querySelectorAll<HTMLElement>("[data-rise], [data-word]")].filter((e) => e.matches("[data-rise], [data-word]"));
+                if (els.length) gsap.set(els, { autoAlpha: 1, clearProps: "transform" });
+              });
+          })
+        : null;
+      if (root && mo) mo.observe(root, { childList: true, subtree: true });
+      return () => {
+        mo?.disconnect();
+        mm.revert();
+      };
     },
     { scope, dependencies: deps, revertOnUpdate: true },
   );
@@ -138,8 +165,9 @@ export function Aurora({ className, tone = "night" }: { className?: string; tone
     () => {
       const mm = gsap.matchMedia();
       mm.add(MOTION_OK, () => {
-        gsap.utils.toArray<HTMLElement>("[data-orb]", ref.current).forEach((orb, i) => {
+        const tweens = gsap.utils.toArray<HTMLElement>("[data-orb]", ref.current).map((orb, i) =>
           gsap.to(orb, {
+            paused: true,
             xPercent: gsap.utils.random(-18, 18),
             yPercent: gsap.utils.random(-14, 14),
             scale: gsap.utils.random(0.9, 1.2),
@@ -148,7 +176,14 @@ export function Aurora({ className, tone = "night" }: { className?: string; tone
             repeat: -1,
             yoyo: true,
             delay: i * -3,
-          });
+          }),
+        );
+        // Off screen, the glow stands still: three large layers moving forever cost frames on phones.
+        ScrollTrigger.create({
+          trigger: ref.current,
+          start: "top bottom",
+          end: "bottom top",
+          onToggle: (self) => tweens.forEach((t) => (self.isActive ? t.play() : t.pause())),
         });
       });
       return () => mm.revert();
@@ -157,9 +192,9 @@ export function Aurora({ className, tone = "night" }: { className?: string; tone
   );
   return (
     <div ref={ref} className={cn("pointer-events-none absolute inset-0 -z-10 overflow-hidden", tone === "night" ? "bg-navy-950" : "bg-navy-900", className)} aria-hidden="true">
-      <div data-orb className="absolute -left-[20%] -top-[30%] h-[85%] w-[70%] rounded-full bg-[radial-gradient(closest-side,rgba(61,61,143,0.85),transparent)]" />
-      <div data-orb className="absolute -right-[15%] top-[10%] h-[80%] w-[60%] rounded-full bg-[radial-gradient(closest-side,rgba(183,32,52,0.45),transparent)]" />
-      <div data-orb className="absolute -bottom-[35%] left-[25%] h-[80%] w-[65%] rounded-full bg-[radial-gradient(closest-side,rgba(248,167,36,0.30),transparent)]" />
+      <div data-orb className="absolute will-change-transform -left-[20%] -top-[30%] h-[85%] w-[70%] rounded-full bg-[radial-gradient(closest-side,rgba(61,61,143,0.85),transparent)]" />
+      <div data-orb className="absolute will-change-transform -right-[15%] top-[10%] h-[80%] w-[60%] rounded-full bg-[radial-gradient(closest-side,rgba(183,32,52,0.45),transparent)]" />
+      <div data-orb className="absolute will-change-transform -bottom-[35%] left-[25%] h-[80%] w-[65%] rounded-full bg-[radial-gradient(closest-side,rgba(248,167,36,0.30),transparent)]" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,transparent_40%,rgba(20,20,58,0.6))]" />
     </div>
   );
@@ -177,6 +212,14 @@ export function Marquee({ children, className, seconds = 40, reverse }: { childr
         const tween = reverse
           ? gsap.fromTo(track, { xPercent: -50 }, { xPercent: 0, duration: seconds, ease: "none", repeat: -1 })
           : gsap.to(track, { xPercent: -50, duration: seconds, ease: "none", repeat: -1 });
+        // Off screen the row stands still.
+        const st = ScrollTrigger.create({
+          trigger: ref.current,
+          start: "top bottom",
+          end: "bottom top",
+          onToggle: (self) => (self.isActive ? tween.play() : tween.pause()),
+        });
+        if (!st.isActive) tween.pause();
         const slow = () => gsap.to(tween, { timeScale: 0.15, duration: 0.6 });
         const resume = () => gsap.to(tween, { timeScale: 1, duration: 0.6 });
         ref.current?.addEventListener("pointerenter", slow);
@@ -194,7 +237,7 @@ export function Marquee({ children, className, seconds = 40, reverse }: { childr
     // With reduced motion the row stands still and scrolls sideways by touch instead of
     // wrapping (a wrapped row of 300px tiles is endless on a phone).
     <div ref={ref} className={cn("overflow-hidden motion-reduce:overflow-x-auto motion-reduce:[scrollbar-width:none]", className)}>
-      <div data-track className="flex w-max">
+      <div data-track className="flex w-max will-change-transform">
         <div className="flex shrink-0">{children}</div>
         <div className="flex shrink-0 motion-reduce:hidden" aria-hidden="true" inert>
           {children}

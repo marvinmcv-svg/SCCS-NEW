@@ -92,6 +92,8 @@ test.describe("Home page", () => {
     await page.goto("/");
     const navLogo = page.locator("header").getByRole("link", { name: /home/ });
     await expect(navLogo).toHaveCSS("opacity", "0");
+    // Scroll once the app has hydrated, as a visitor would after the page appears.
+    await page.waitForFunction(() => (window as unknown as { __sccsReady?: boolean }).__sccsReady === true);
     await page.evaluate(() => window.scrollTo({ top: 1200, behavior: "instant" }));
     await expect(navLogo).toHaveCSS("opacity", "1");
   });

@@ -4,14 +4,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight, ChevronLeft, ChevronRight, ChevronRight as Sep } from "lucide-react";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import type { Photo as PhotoT } from "@/data/media";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { useStaticMotion } from "@/lib/use-static-motion";
 import { cn, EASE } from "@/lib/utils";
 import { useLang } from "./i18n";
 import { Kicker, Photo, Reveal } from "./sccs-shared";
-import { EASE_OUT, Words, gsap, useGSAP } from "../home/motion";
 
 export type Crumb = { href: string; label: string };
 
@@ -59,24 +58,12 @@ export function PageHero({
   imgPosition?: string;
   tall?: boolean;
 }) {
-  const root = useRef<HTMLElement>(null);
-  useGSAP(
-    () => {
-      const mm = gsap.matchMedia();
-      mm.add("(prefers-reduced-motion: no-preference)", () => {
-        gsap.from("[data-word]", { yPercent: 115, duration: 1.1, ease: EASE_OUT, stagger: 0.05, delay: 0.1 });
-        gsap.from("[data-page-rise]", { y: 22, autoAlpha: 0, duration: 0.9, ease: EASE_OUT, stagger: 0.08, delay: 0.35 });
-        gsap.from("[data-page-media]", { y: "6vw", scaleY: 1.12, autoAlpha: 0, duration: 0.9, ease: "power2.out", delay: 0.15, clearProps: "transform" });
-      });
-      return () => mm.revert();
-    },
-    { scope: root },
-  );
+  // The header is the first thing a visitor reads, so it renders as-is: no entrance
+  // animation that would hide painted text at hydration and replay it.
   // The Colina "cover": the page title on the field colour, and the photograph as a
   // rounded card that sits on the bottom edge.
   return (
     <section
-      ref={root}
       data-color="field"
       className={cn(
         "relative bg-field text-field-ink md:flex md:items-stretch md:justify-between md:pt-[max(84px,min(9.03vw,13vh))]",
@@ -90,9 +77,7 @@ export function PageHero({
         <p data-page-rise className="t-label mt-[max(20px,2vw)] text-slate">
           {kicker}
         </p>
-        <h1 className="t-display mt-[0.3em] text-balance">
-          <Words text={title} />
-        </h1>
+        <h1 className="t-display mt-[0.3em] text-balance">{title}</h1>
         {lede && (
           <p data-page-rise className="t-body mt-[0.8em] max-w-[38ch] text-field-ink/90">
             {lede}

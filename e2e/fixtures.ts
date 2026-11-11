@@ -45,7 +45,8 @@ export async function waitForReveals(page: Page, scope: string) {
           [...document.querySelectorAll(`${sel} [data-rise]`)].every((el) => {
             const cs = getComputedStyle(el);
             const r = el.getBoundingClientRect();
-            const offScreen = r.bottom < 0 || r.top > window.innerHeight;
+            // Reveals trigger when an element's top crosses 90% of the screen height.
+            const offScreen = r.bottom < 0 || r.top > window.innerHeight * 0.88;
             return offScreen || (cs.opacity === "1" && cs.transform === "none");
           }),
         scope,

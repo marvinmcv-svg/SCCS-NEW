@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import { useScrollChoreography } from "../home/motion";
 import { useLang } from "./i18n";
@@ -19,6 +19,9 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
   // The nav re-tints to the section under it; `.fade` entrances start after hydration.
   useSectionTint([pathname]);
   useLoaded();
+  useEffect(() => {
+    (window as unknown as { __sccsReady?: boolean }).__sccsReady = true;
+  }, []);
   // The admin portal has its own chrome.
   if (pathname?.startsWith("/admin")) return <>{children}</>;
   return (

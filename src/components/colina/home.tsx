@@ -15,6 +15,7 @@ import { Crest, Photo, SchoolJaguar } from "../sccs/sccs-shared";
 import { AccreditationLogos } from "../sccs/credentials";
 import { CountFigure, gsap, useGSAP } from "../home/motion";
 import { LearnMoreModal } from "./modal";
+import { useInView } from "@/lib/use-in-view";
 
 /* Shared layout widths */
 const gutterGrid = "px-[var(--gutter-grid)]";
@@ -56,6 +57,8 @@ export function Hero() {
   const root = useRef<HTMLElement>(null);
   const [index, setIndex] = useState(0);
   const slides = HERO_SLIDES;
+  // The slideshow (and its slow zoom) only runs while the hero is on screen.
+  const heroOn = useInView(root);
 
   // Slide change: crossfade, a slow pull-back on the incoming photo, and the timer bar.
   useGSAP(
@@ -65,6 +68,7 @@ export function Hero() {
       const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       frames.forEach((f, i) => gsap.to(f, { autoAlpha: i === index ? 1 : 0, duration: reduce ? 0 : 1.4, ease: "power2.inOut" }));
       bars.forEach((b, i) => gsap.set(b, { scaleX: i < index ? 1 : 0 }));
+      if (!heroOn) return;
       if (reduce) {
         gsap.set(bars[index], { scaleX: 1 });
         return;
@@ -73,7 +77,7 @@ export function Hero() {
       if (img) gsap.fromTo(img, { scale: 1.08 }, { scale: 1, duration: SLIDE_SECONDS + 1.5, ease: "none" });
       gsap.fromTo(bars[index], { scaleX: 0 }, { scaleX: 1, duration: SLIDE_SECONDS, ease: "none", onComplete: () => setIndex((i) => (i + 1) % slides.length) });
     },
-    { scope: root, dependencies: [index, slides.length], revertOnUpdate: true },
+    { scope: root, dependencies: [index, slides.length, heroOn], revertOnUpdate: true },
   );
 
   return (
@@ -138,7 +142,7 @@ export function Hero() {
                 fetchPriority={i === 0 ? "high" : undefined}
                 loading={i === 0 ? undefined : "eager"}
                 sizes="(min-width:768px) 40vw, 100vw"
-                className="object-cover"
+                className="object-cover will-change-transform"
               />
             </div>
           ))}
@@ -587,8 +591,10 @@ export function CareersHome() {
 
 /** A schematic of Santa Cruz: the city's ring roads and the campus pin. Not to scale. */
 function CampusMap({ label }: { label: string }) {
+  const ref = useRef<SVGSVGElement>(null);
+  const inView = useInView(ref);
   return (
-    <svg viewBox="0 0 400 360" className="h-auto w-full md:w-[120%] md:max-w-none" role="img" aria-label={label}>
+    <svg ref={ref} data-inview={inView} viewBox="0 0 400 360" className="h-auto w-full md:w-[120%] md:max-w-none" role="img" aria-label={label}>
       <g fill="none" stroke="var(--color-field-ink)" strokeOpacity="0.45" strokeWidth="2">
         <ellipse cx="210" cy="170" rx="34" ry="30" />
         <ellipse cx="210" cy="170" rx="74" ry="66" />

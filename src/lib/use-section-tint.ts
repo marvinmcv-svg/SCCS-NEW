@@ -16,7 +16,11 @@ export function useSectionTint(deps: unknown[] = []) {
       body.dataset.menu = "field";
       return;
     }
-    const navH = () => parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--nav-h")) || 60;
+    // The nav height only changes with the viewport, so read it once per resize, not per frame.
+    let navHeight = 60;
+    const readNavH = () => (navHeight = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--nav-h")) || 60);
+    readNavH();
+    const navH = () => navHeight;
     const pick = () => {
       const line = navH() - 1;
       let current: string | undefined;
@@ -40,12 +44,16 @@ export function useSectionTint(deps: unknown[] = []) {
     };
     pick();
     window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", pick);
+    const onResize = () => {
+      readNavH();
+      pick();
+    };
+    window.addEventListener("resize", onResize);
     return () => {
       io.disconnect();
       cancelAnimationFrame(frame);
       window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", pick);
+      window.removeEventListener("resize", onResize);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, deps);

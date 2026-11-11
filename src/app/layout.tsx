@@ -11,6 +11,8 @@ const fraunces = Fraunces({ subsets: ["latin", "latin-ext"], display: "swap", va
 const inter = Inter({ subsets: ["latin", "latin-ext"], display: "swap", variable: "--font-inter" });
 const montserrat = Montserrat({ subsets: ["latin", "latin-ext"], display: "swap", variable: "--font-brand", weight: ["500", "700"] });
 
+const MOTION_BOOT = `(function(){try{if(matchMedia("(prefers-reduced-motion: reduce)").matches)return;var d=document.documentElement;d.classList.add("motion-ok");setTimeout(function(){if(!window.__sccsReady)d.classList.remove("motion-ok")},4000)}catch(e){}})();`;
+
 const description =
   "Two Diplomas. One Unrivaled Future. Santa Cruz Cooperative School is the premier PK–12 American international school in Bolivia — dual U.S. and Bolivian diplomas, Cognia-accredited, 99% university matriculation.";
 
@@ -62,6 +64,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     <html lang="en" className={`${fraunces.variable} ${inter.variable} ${montserrat.variable}`}>
       <head>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+        {/* Before first paint: elements that animate in start hidden, so they appear once instead of
+            showing, vanishing at hydration and replaying. If the app never hydrates, show everything. */}
+        <script dangerouslySetInnerHTML={{ __html: MOTION_BOOT }} />
       </head>
       <body>
         <ContentProvider doc={content}>

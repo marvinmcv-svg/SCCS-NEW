@@ -113,9 +113,29 @@ export function Header() {
       setHeroLogoVisible(false);
       return;
     }
-    const io = new IntersectionObserver(([e]) => setHeroLogoVisible(e.isIntersecting), { rootMargin: "-60px 0px 0px 0px" });
+    // Measured directly (observer + frame-throttled scroll check): an observer alone can miss
+    // its callback when the page is busy, which left the nav without a logo.
+    const check = () => {
+      const r = el.getBoundingClientRect();
+      setHeroLogoVisible(r.bottom > 60 && r.top < window.innerHeight);
+    };
+    let frame = 0;
+    const onScroll = () => {
+      if (frame) return;
+      frame = requestAnimationFrame(() => {
+        frame = 0;
+        check();
+      });
+    };
+    const io = new IntersectionObserver(check, { rootMargin: "-60px 0px 0px 0px" });
     io.observe(el);
-    return () => io.disconnect();
+    check();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      io.disconnect();
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", onScroll);
+    };
   }, [isHome]);
 
   // Close menus on route change.

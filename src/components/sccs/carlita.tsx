@@ -234,7 +234,8 @@ export function Carlita() {
               whileHover={reduce ? undefined : { scale: 1.07 }}
               whileTap={reduce ? undefined : { scale: 0.94 }}
               transition={{ type: "spring", bounce: 0.3, duration: 0.4 }}
-              className="group relative h-16 w-16 rounded-full shadow-[0_14px_40px_rgba(20,20,58,0.32)] sm:h-[4.5rem] sm:w-[4.5rem]"
+              data-nudge={nudge || undefined}
+              className="carlita-launcher group relative h-16 w-16 rounded-full shadow-[0_14px_40px_rgba(20,20,58,0.32)] sm:h-[4.5rem] sm:w-[4.5rem]"
               aria-label={c.open}
               title={c.launcher}
             >

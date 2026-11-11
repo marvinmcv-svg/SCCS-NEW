@@ -448,3 +448,33 @@ body[data-loaded] .fade { opacity: 1; }
 @media (prefers-reduced-motion: reduce) {
   .modal-panel[data-state="open"] { animation: modal-close-in 0.2s both; }
 }
+
+/* Performance: the launcher sits on every page, so it only moves when it has attention
+   (hovered, focused, or nudging). SVG animations repaint every frame while they run. */
+.carlita-launcher:not(:hover):not(:focus-visible):not([data-nudge]) .carlita-char *,
+.carlita-launcher:not(:hover):not(:focus-visible):not([data-nudge]) .carlita-pulse {
+  animation-play-state: paused;
+}
+
+/* Decorative pulses run only while their element is on screen (set by useInView). */
+[data-inview="false"] .sccs-pin-pulse { animation-play-state: paused; }
+
+/* Phones: a blurred, translucent fixed bar re-blurs the page on every scroll frame.
+   Use a near-opaque bar instead; desktop keeps the glass. */
+@media (max-width: 1023px) {
+  header.fixed { backdrop-filter: none; -webkit-backdrop-filter: none; }
+  body[data-menu="field"] { --nav-bg: rgb(235 235 245 / 0.96); }
+  body[data-menu="rose"] { --nav-bg: rgb(243 211 216 / 0.96); }
+  body[data-menu="lgrey"] { --nav-bg: rgb(247 247 249 / 0.96); }
+  body[data-menu="navy"] { --nav-bg: rgb(20 20 58 / 0.96); }
+  body[data-menu="card"] { --nav-bg: rgb(252 248 241 / 0.96); }
+  body:not([data-menu]) { --nav-bg: rgb(235 235 245 / 0.96); }
+}
+
+/* Reveal targets start transparent once JS has marked the page (see MOTION_BOOT in
+   layout.tsx); the scroll choreography shows each one exactly once. Opacity, not
+   visibility, so the content stays in the accessibility tree for screen readers. */
+.motion-ok [data-rise],
+.motion-ok [data-words] [data-word] {
+  opacity: 0;
+}

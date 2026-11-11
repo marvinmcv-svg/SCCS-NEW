@@ -13,6 +13,7 @@ import type { GlobeMethods, GlobeProps } from "react-globe.gl";
 import { DESTINATIONS, HOME, type Destination, type Region } from "@/data/destinations";
 import { cn } from "@/lib/utils";
 import { useLang } from "./i18n";
+import { useInView } from "@/lib/use-in-view";
 
 const Globe = dynamic(() => import("react-globe.gl"), {
   ssr: false,
@@ -55,11 +56,38 @@ export function GlobeExplorer() {
   const [reduce, setReduce] = useState(false);
   useEffect(() => setReduce(window.matchMedia("(prefers-reduced-motion: reduce)").matches), []);
 
+  // Performance: WebGL is the heaviest thing on the page. Mount the globe only once its
+  // stage comes within a screen of the viewport, and stop rendering whenever it is off
+  // screen or the tab is hidden (three.js otherwise draws every frame forever).
+  const near = useInView(stageRef, 1, false);
+  const onScreen = useInView(stageRef, 0, false);
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    if (near) setMounted(true);
+  }, [near]);
+  const visible = useRef(false);
+  const [tabHidden, setTabHidden] = useState(false);
+  useEffect(() => {
+    const onVisibility = () => setTabHidden(document.hidden);
+    document.addEventListener("visibilitychange", onVisibility);
+    return () => document.removeEventListener("visibilitychange", onVisibility);
+  }, []);
+  useEffect(() => {
+    visible.current = onScreen && !tabHidden;
+    const g = globeRef.current;
+    if (!g) return;
+    if (visible.current) g.resumeAnimation();
+    else g.pauseAnimation();
+  }, [onScreen, tabHidden]);
+
   const fly = useCallback((d: Destination | undefined, ms = 900) => {
     if (d) globeRef.current?.pointOfView({ lat: d.lat - 6, lng: d.lng, altitude: 2.1 }, ms);
   }, []);
 
   const onReady = useCallback(() => {
+    // High-density phone screens would render 3x the pixels for no visible gain.
+    globeRef.current?.renderer().setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
+    if (!visible.current) globeRef.current?.pauseAnimation();
     const c = globeRef.current?.controls();
     if (c) {
       c.enableZoom = false;
@@ -181,7 +209,12 @@ export function GlobeExplorer() {
         {/* The globe */}
         <div ref={stageRef} className="relative order-1 grid place-items-center py-6 lg:order-2 lg:py-8">
           <div className="pointer-events-none absolute left-1/2 top-1/2 h-[70%] w-[70%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(61,61,143,0.55),transparent)] blur-2xl" aria-hidden="true" />
-          <div role="img" aria-label={lang === "es" ? `Globo con ${list.length} universidades` : `Globe showing ${list.length} universities`}>
+          <div
+            role="img"
+            aria-label={lang === "es" ? `Globo con ${list.length} universidades` : `Globe showing ${list.length} universities`}
+            style={{ width: size, height: size }}
+          >
+            {mounted && (
             <Globe
               ref={globeRef}
               width={size}
@@ -210,8 +243,10 @@ export function GlobeExplorer() {
                 if (d) choose(d);
               }}
               onGlobeReady={onReady}
-              animateIn
+              animateIn={!reduce}
+              rendererConfig={{ antialias: false, powerPreference: "low-power", alpha: true }}
             />
+            )}
           </div>
           {active && (
             <div className="pointer-events-none absolute bottom-6 left-1/2 -translate-x-1/2 rounded-full bg-white/10 px-4 py-2 text-sm font-medium text-white backdrop-blur-md lg:bottom-10">
