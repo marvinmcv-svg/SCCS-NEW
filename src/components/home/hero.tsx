@@ -61,18 +61,19 @@ export function HomeHero() {
     { scope: root, dependencies: [index, slides.length], revertOnUpdate: true },
   );
 
+  // On laptops and desktops the hero fits one screen: header, headline, card and photo, nothing cut off.
   return (
-    <section ref={root} id="top" className="relative overflow-hidden pb-6 pt-28 sm:pt-32 lg:pb-10 lg:pt-36">
-      <div className="mx-auto grid w-full max-w-[90rem] gap-8 px-5 sm:px-8 lg:grid-cols-12 lg:items-stretch lg:gap-10 lg:px-12">
+    <section ref={root} id="top" className="relative flex flex-col overflow-hidden pb-6 pt-28 sm:pt-32 lg:h-[100svh] lg:max-h-[62rem] lg:min-h-[38rem] lg:pb-6 lg:pt-[7.25rem]">
+      <div className="mx-auto grid w-full max-w-[90rem] gap-8 px-5 sm:px-8 lg:min-h-0 lg:flex-1 lg:grid-cols-12 lg:items-stretch lg:gap-10 lg:px-12">
         {/* Words, actions and the credentials card */}
-        <div data-hero-copy className="flex flex-col lg:col-span-6 lg:py-6">
-          <h1 className="font-display text-balance text-[3.1rem] font-bold leading-[0.95] text-navy-800 sm:text-7xl lg:text-[5.25rem] xl:text-[6rem]">
+        <div data-hero-copy className="flex flex-col lg:col-span-6 lg:min-h-0 lg:py-[2vh]">
+          <h1 className="font-display text-balance text-[3.1rem] font-bold leading-[0.95] text-navy-800 sm:text-7xl lg:text-[clamp(2.75rem,min(8vh,5.4vw),5.75rem)]">
             <Words text={t.hero.title} />
           </h1>
-          <p data-hero-rise className="mt-6 max-w-xl text-xl font-medium text-navy-900/75 sm:text-2xl">
+          <p data-hero-rise className="mt-6 max-w-xl text-xl font-medium text-navy-900/75 sm:text-2xl lg:mt-[2.5vh] lg:text-[clamp(1.125rem,2.4vh,1.5rem)]">
             {t.hero.sub}
           </p>
-          <div data-hero-rise className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
+          <div data-hero-rise className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 lg:mt-[3vh]">
             <Link href="/admissions#inquire" className={cn(buttonStyles.gold, "h-12 px-8 text-base shadow-none hover:shadow-none")}>
               {t.hero.ctaPrimary}
             </Link>
@@ -82,19 +83,18 @@ export function HomeHero() {
             </Link>
           </div>
 
-          <div data-hero-rise className="mt-10 flex flex-col gap-6 rounded-[1.75rem] bg-ivory p-6 sm:flex-row sm:items-center sm:p-8 lg:mt-auto">
-            <AccreditationLogos size="sm" className="shrink-0 sm:max-w-[12rem]" />
-            <div>
-              <h2 className="font-display text-2xl font-medium leading-tight text-navy-800 sm:text-[1.7rem]">
-                {tr({ en: "An accredited American international school", es: "Un colegio internacional americano acreditado" })}
-              </h2>
-              <p className="mt-2 text-sm leading-relaxed text-mist">{t.home.accreditedLine}</p>
-            </div>
+          <div data-hero-rise className="mt-10 rounded-[1.75rem] bg-ivory p-6 sm:p-7 lg:mt-auto lg:p-[clamp(1rem,2.6vh,1.75rem)]">
+            <h2 className="font-display text-2xl font-medium leading-tight text-navy-800 lg:text-[clamp(1.25rem,2.6vh,1.6rem)]">
+              {tr({ en: "An accredited American international school", es: "Un colegio internacional americano acreditado" })}
+            </h2>
+            <p className="mt-2 text-sm leading-relaxed text-mist [@media(min-width:1024px)_and_(max-height:760px)]:line-clamp-1">{t.home.accreditedLine}</p>
+            {/* Badges in one row, sized down to fit the card */}
+            <AccreditationLogos size="sm" className="mt-4 flex-nowrap gap-x-5 [&_img]:h-10 lg:[&_img]:h-[clamp(2rem,4.5vh,2.75rem)]" />
           </div>
         </div>
 
         {/* The slideshow, as one tall rounded card */}
-        <div data-hero-controls className="relative isolate min-h-[26rem] overflow-hidden rounded-[2rem] bg-navy-900 sm:min-h-[34rem] lg:col-span-6 lg:min-h-[44rem]">
+        <div data-hero-controls className="relative isolate min-h-[26rem] overflow-hidden rounded-[2rem] bg-navy-900 sm:min-h-[34rem] lg:col-span-6 lg:h-full lg:min-h-0">
           <div data-hero-media className="absolute inset-0 -z-20">
             {slides.map((s, i) => (
               <div key={s.photo.src + i} data-slide className={cn("absolute inset-0", i !== 0 && "invisible opacity-0")}>
