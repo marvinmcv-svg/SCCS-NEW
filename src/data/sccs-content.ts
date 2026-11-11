@@ -241,8 +241,8 @@ export const NEWS: NewsPost[] = [
     category: "COMMUNITY",
     date: "2026-06-06",
     featured: true,
-    image: media.graduationPac,
-    gallery: [media.pacFlags, media.collegeFairPennant, media.collegeFair],
+    image: media.pacFlags,
+    gallery: [media.dMunDelegatesGarden, media.dMunBoys],
     title: { en: "Class of 2026: 99% Matriculation, Five Continents", es: "Generación 2026: 99% de matriculación, cinco continentes" },
     excerpt: {
       en: "Our graduates head to leading universities across the Americas and Europe — carrying two diplomas and one unrivaled future.",

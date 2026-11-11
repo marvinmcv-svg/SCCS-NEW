@@ -7,7 +7,7 @@
  * server for every request that renders a page, and in the browser before the first
  * render. Components keep importing their data exactly as before.
  *
- * Photos are referenced by library key (`{ "$media": "campusLawn" }`) in stored JSON,
+ * Photos are referenced by library key (`{ "$media": "campusGardens" }`) in stored JSON,
  * so replacing a photo in the library updates every place it appears.
  */
 import { media, type Photo } from "@/data/media";
@@ -46,7 +46,7 @@ function serialize(value: unknown, top = false): Json {
 const mediaLive = media as unknown as Record<string, Photo>;
 
 function hydrate(value: Json): unknown {
-  if (isRef(value)) return mediaLive[value.$media] ?? mediaLive.campusLawn;
+  if (isRef(value)) return mediaLive[value.$media] ?? mediaLive.campusGardens;
   if (Array.isArray(value)) return value.map(hydrate);
   if (isObj(value)) return Object.fromEntries(Object.entries(value).map(([k, v]) => [k, hydrate(v as Json)]));
   return value;

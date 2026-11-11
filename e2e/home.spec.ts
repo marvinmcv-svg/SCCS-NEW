@@ -1,4 +1,4 @@
-import { test, expect, expectNoHorizontalScroll, switchToSpanish } from "./fixtures";
+import { test, expect, expectNoHorizontalScroll, switchToSpanish, waitForReveals } from "./fixtures";
 
 test.describe("Home page", () => {
   test("renders the redesigned hero and highlights", async ({ page, errors }) => {
@@ -51,7 +51,7 @@ test.describe("Home page", () => {
     const box = page.locator("#learning [data-rise]").filter({ has: page.getByRole("heading", { name: "The Dual-Diploma Advantage" }) });
     const learnMore = box.getByRole("button", { name: "Learn more" });
     await learnMore.evaluate((el) => el.scrollIntoView({ block: "center", behavior: "instant" }));
-    await page.waitForTimeout(1200);
+    await waitForReveals(page, "#learning");
     await learnMore.click();
     const modal = page.getByTestId("learn-more-modal");
     await expect(modal).toBeVisible();
@@ -64,12 +64,22 @@ test.describe("Home page", () => {
   test("the nav re-tints to the section under it", async ({ page, errors }) => {
     void errors;
     await page.goto("/");
+    // Content above can finish loading after the scroll and push the section down,
+    // so each poll scrolls to the section again and reads the tint a frame later.
     const expectTintAt = async (id: string, tint: string) => {
-      await page.evaluate((id) => {
-        const el = document.getElementById(id)!;
-        window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY + 30, behavior: "instant" });
-      }, id);
-      await expect.poll(() => page.evaluate(() => document.body.dataset.menu)).toBe(tint);
+      await expect
+        .poll(() =>
+          page.evaluate(
+            (id) =>
+              new Promise<string | undefined>((resolve) => {
+                const el = document.getElementById(id)!;
+                window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY + 30, behavior: "instant" });
+                requestAnimationFrame(() => requestAnimationFrame(() => resolve(document.body.dataset.menu)));
+              }),
+            id,
+          ),
+        )
+        .toBe(tint);
     };
     await expectTintAt("stats", "field");
     await expectTintAt("matriculation", "navy");

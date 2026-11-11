@@ -31,3 +31,25 @@ export async function switchToSpanish(page: Page) {
   await menu.getByRole("button", { name: /^Language:/ }).click();
   await menu.getByRole("button", { name: /Cerrar menú|Close menu/ }).click();
 }
+
+/**
+ * Waits until every scroll-reveal element inside `scope` has finished animating
+ * (opacity 1, no transform). Clicking mid-reveal can hit a neighbour that is still
+ * scaled up, and Playwright's retry re-scrolls a smooth-scrolling page.
+ */
+export async function waitForReveals(page: Page, scope: string) {
+  await expect
+    .poll(() =>
+      page.evaluate(
+        (sel) =>
+          [...document.querySelectorAll(`${sel} [data-rise]`)].every((el) => {
+            const cs = getComputedStyle(el);
+            const r = el.getBoundingClientRect();
+            const offScreen = r.bottom < 0 || r.top > window.innerHeight;
+            return offScreen || (cs.opacity === "1" && cs.transform === "none");
+          }),
+        scope,
+      ),
+    )
+    .toBe(true);
+}

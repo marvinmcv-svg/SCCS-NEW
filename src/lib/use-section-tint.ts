@@ -26,13 +26,25 @@ export function useSectionTint(deps: unknown[] = []) {
       }
       body.dataset.menu = current ?? "field";
     };
-    // An observer whose band is the nav's bottom edge: any section entering or leaving it re-picks.
+    // An observer whose band is the nav's bottom edge re-picks when a section crosses it; a
+    // frame-throttled scroll check backs it up, so even a long jump lands on the right colour.
     const io = new IntersectionObserver(pick, { rootMargin: `-${navH() - 1}px 0px -${window.innerHeight - navH()}px 0px` });
     sections.forEach((s) => io.observe(s));
+    let frame = 0;
+    const onScroll = () => {
+      if (frame) return;
+      frame = requestAnimationFrame(() => {
+        frame = 0;
+        pick();
+      });
+    };
     pick();
+    window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", pick);
     return () => {
       io.disconnect();
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", pick);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps

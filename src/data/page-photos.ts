@@ -7,8 +7,8 @@ import { media } from "./media";
  */
 export const PAGE_PHOTOS = {
   home: {
-    whySccsTile1: media.graduationPac,
-    whySccsTile2: media.collegeFair,
+    whySccsTile1: media.dMissionWallTeam,
+    whySccsTile2: media.dMunDelegatesGarden,
     whySccsTile3: media.dPalapaClass,
     whySccsTile4: media.dVexWorldsBoliviaFlag,
     whySccsTile5: media.dFgFolkDance,
@@ -20,7 +20,7 @@ export const PAGE_PHOTOS = {
   journey: {
     elementarySchool: media.dEsBoysLaughing,
     middleSchool: media.dStemCupChallenge,
-    highSchool: media.collegeFair,
+    highSchool: media.dClassFriends,
   },
   siteWide: {
     closingBannerBackground: media.pacFlags,
@@ -34,7 +34,7 @@ export const PAGE_PHOTOS = {
     safetyCard: media.esLunchTrio,
   },
   discoverLinks: {
-    theSccsAdvantage: media.campusLawn,
+    theSccsAdvantage: media.dCampusFieldGroup,
     ourHistory: media.historyHalloween,
     safetyAndWellness: media.esLunchTrio,
     campusAndFacilities: media.campusGardens,
@@ -45,42 +45,42 @@ export const PAGE_PHOTOS = {
   safety: { hero: media.esFriends },
   campus: {
     hero: media.campusGardens,
-    aroundCampus: [media.campusGardens, media.campusLawn, media.campusPlayground, media.campusPatio, media.gym, media.libraryLounge, media.pacFlags],
+    aroundCampus: [media.campusGardens, media.dCampusTower, media.campusPlayground, media.campusPatio, media.gym, media.libraryLounge, media.pacFlags],
   },
   schoolProfile: {
-    hero: media.graduationPac,
-    campusBand: media.campusLawn,
+    hero: media.dVolleyballChampions,
+    campusBand: media.campusGardens,
     apResultsLarge: media.igMicroscope6,
-    apResultsSmall: media.collegeFair,
+    apResultsSmall: media.dScienceTestTubes,
     campusMosaic: [media.dCampusTower, media.library, media.dSoccerAction, media.dFgFolkDance],
   },
   leadership: { hero: media.board, boardPhoto: media.board },
   careers: { hero: media.teacherEs },
 
-  admissions: { hero: media.campusLawn, besideIntro: media.esLunchTrio },
-  contact: { hero: media.campusGardens, visitUs: media.campusLawn },
+  admissions: { hero: media.dEsFriendsHall, besideIntro: media.esLunchTrio },
+  contact: { hero: media.campusGardens, visitUs: media.dCampusTower },
 
-  learning: { hero: media.igMicroscope4, collegeCounseling: media.collegeFair },
+  learning: { hero: media.igMicroscope4, collegeCounseling: media.dClassCircle },
   learningLinks: {
     curriculum: media.dVexWorldsTeam,
     academicJourney: media.igMath1,
-    dualDiploma: media.graduationPac,
+    dualDiploma: media.dMunDelegatesGarden,
     studentSupport: media.esFriends2,
-    universityMatriculation: media.collegeFairPennant,
+    universityMatriculation: media.dMunDelegatesPac,
   },
   academicJourney: {
     hero: media.igMatter2,
     elementaryGallery: [media.igMath2, media.esClassroom, media.igReadingNight5],
     middleSchoolGallery: [media.igMicroscope2, media.msClassroom, media.dStemTowerBuild],
-    highSchoolGallery: [media.dVexWorldsField, media.collegeFairReading, media.graduationPac],
+    highSchoolGallery: [media.dVexWorldsField, media.dMunBoys, media.dScienceTestTubes],
   },
-  dualDiploma: { hero: media.pacFlags, twoDiplomas: media.graduationPac },
+  dualDiploma: { hero: media.pacFlags, twoDiplomas: media.dClassFriends },
   studentSupport: { hero: media.esFriends2 },
   matriculation: {
-    hero: media.collegeFairPennant,
-    collegeFairWide: media.collegeFair,
-    collegeFairLeft: media.collegeFairFamilies,
-    collegeFairRight: media.collegeFairReading,
+    hero: media.dMunDelegatesGarden,
+    collegeFairWide: media.solariaGroup,
+    collegeFairLeft: media.dClassCircle,
+    collegeFairRight: media.dMunBoys,
   },
 
   campusLife: {

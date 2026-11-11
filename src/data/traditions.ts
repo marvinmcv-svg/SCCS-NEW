@@ -293,7 +293,7 @@ export const TRADITIONS: Tradition[] = [
     group: "civic",
     title: { en: "Fun Run", es: "Fun Run" },
     tagline: { en: "Eight acres. One lap. Every Jaguar.", es: "Ocho acres. Una vuelta. Cada Jaguar." },
-    image: media.campusLawn,
+    image: media.dWalkathon,
     gallery: [media.campusPlayground, media.fgWaterGames],
     when: { en: "November", es: "Noviembre" },
     who: { en: "Students, families, faculty, alumni", es: "Estudiantes, familias, docentes y egresados" },

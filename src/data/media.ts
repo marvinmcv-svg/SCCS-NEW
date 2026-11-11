@@ -26,13 +26,11 @@ const p = (
 export const media = {
   // Campus
   campusGardens: p("campus-gardens", 1250, 938, "Thatched palapas and tropical gardens at the heart of the SCCS campus", "Palapas y jardines tropicales en el corazón del campus SCCS"),
-  campusLawn: p("campus-lawn", 1280, 958, "Students on the main lawn, palm trees and red-tiled classrooms behind them", "Estudiantes en el prado principal, con palmeras y aulas de techo rojo detrás"),
   campusPlayground: p("campus-playground", 1250, 887, "Elementary playground and open green fields", "Parque infantil de Elementary y amplios campos verdes"),
   campusPatio: p("campus-patio", 1250, 938, "Covered elementary patio with painted floor games", "Patio techado de Elementary con juegos pintados en el piso"),
   gym: p("gym", 1250, 938, "The SCCS covered gymnasium and court", "El coliseo techado y la cancha de SCCS"),
 
   // Performing Arts Center
-  graduationPac: p("graduation-pac", 1250, 938, "Graduating seniors on the Performing Arts Center stage before a full house", "Graduados en el escenario del Performing Arts Center ante un auditorio lleno"),
   pacFlags: p("pac-flags", 1250, 938, "The Performing Arts Center set for commencement, with U.S., Bolivian, and Santa Cruz flags", "El Performing Arts Center listo para la graduación, con banderas de EE. UU., Bolivia y Santa Cruz"),
   pacStage: p("pac-stage", 1250, 938, "Students perform a musical number under stage lights in the PAC", "Estudiantes interpretan un número musical bajo las luces del PAC"),
   esAwardsStage: p("es-awards-stage", 1600, 1068, "Second graders on stage at the Core Value Awards", "Estudiantes de segundo grado en el escenario de los Core Value Awards"),
@@ -91,10 +89,6 @@ export const media = {
   igReadingStory: p("ig-reading-story", 640, 640, "A guest author joins the story circle by video", "Un autor invitado se une al círculo de lectura por video", "instagram"),
 
   // College counseling
-  collegeFair: p("college-fair", 2000, 1333, "Seniors holding university brochures at the SCCS college fair", "Estudiantes de último año con folletos universitarios en la feria universitaria de SCCS"),
-  collegeFairPennant: p("college-fair-pennant", 2000, 1333, "Students hold up a university pennant at the college fair", "Estudiantes sostienen un banderín universitario en la feria"),
-  collegeFairFamilies: p("college-fair-families", 2000, 1333, "Parents and students meet university representatives", "Padres y estudiantes conversan con representantes universitarios"),
-  collegeFairReading: p("college-fair-reading", 2000, 1333, "Students review university materials", "Estudiantes revisan material universitario"),
 
   // Service & character
   serviceTecho: p("service-techo", 2000, 1500, "A student swings a hammer on a TECHO home build", "Una estudiante trabaja con martillo en una construcción de TECHO"),

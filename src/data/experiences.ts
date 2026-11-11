@@ -123,7 +123,7 @@ export const EXPERIENCES: Experience[] = [
       { title: { en: "Performance Excellence", es: "Excelencia Escénica" }, text: { en: "A real stage to refine presence and the discipline of mastery.", es: "Un escenario real para pulir la presencia y la disciplina de la maestría." } },
     ],
     quote: { en: "Innovation and visual literacy are the languages of influence. We teach both.", es: "La innovación y la alfabetización visual son los idiomas de la influencia. Enseñamos ambos." },
-    gallery: [media.dFgFolkDance, media.dStageSinger, media.graduationPac, media.dBandTvStage, media.dBandPlaza, media.esAwardsStage],
+    gallery: [media.dFgFolkDance, media.dStageSinger, media.dMsCheerStage, media.dBandTvStage, media.dBandPlaza, media.esAwardsStage],
     cta: { label: { en: "See what's on stage next", es: "Mira lo próximo en escena" }, href: "/campus-life#events" },
   },
   {
