@@ -165,7 +165,7 @@ export function Aurora({ className, tone = "night" }: { className?: string; tone
   );
 }
 
-/** An endless horizontal row. Pauses under the pointer; becomes a wrapped list with reduced motion. */
+/** An endless horizontal row. Pauses under the pointer; with reduced motion it stands still and scrolls by touch. */
 export function Marquee({ children, className, seconds = 40, reverse }: { children: React.ReactNode; className?: string; seconds?: number; reverse?: boolean }) {
   const ref = useRef<HTMLDivElement>(null);
   useGSAP(
@@ -191,9 +191,11 @@ export function Marquee({ children, className, seconds = 40, reverse }: { childr
     { scope: ref, dependencies: [reverse, seconds] },
   );
   return (
-    <div ref={ref} className={cn("overflow-hidden motion-reduce:overflow-visible", className)}>
-      <div data-track className="flex w-max motion-reduce:w-auto motion-reduce:flex-wrap">
-        <div className="flex shrink-0 motion-reduce:flex-wrap">{children}</div>
+    // With reduced motion the row stands still and scrolls sideways by touch instead of
+    // wrapping (a wrapped row of 300px tiles is endless on a phone).
+    <div ref={ref} className={cn("overflow-hidden motion-reduce:overflow-x-auto motion-reduce:[scrollbar-width:none]", className)}>
+      <div data-track className="flex w-max">
+        <div className="flex shrink-0">{children}</div>
         <div className="flex shrink-0 motion-reduce:hidden" aria-hidden="true" inert>
           {children}
         </div>

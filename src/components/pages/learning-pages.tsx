@@ -153,8 +153,8 @@ export function AcademicJourneyPage() {
         <ul className="flex flex-wrap gap-2">
           {j.tabs.map((tb) => (
             <li key={tb.id}>
-              <a href={`#${tb.id}`} className="inline-flex min-h-10 items-center gap-2 rounded-full border border-white/30 px-4 text-sm text-white/90 backdrop-blur-sm hover:border-amber-400 hover:text-amber-400">
-                {tb.label} <span className="text-amber-400">{tb.grades}</span>
+              <a href={`#${tb.id}`} className="inline-flex min-h-11 items-center gap-2 rounded-full border border-field-ink/30 px-4 text-sm text-field-ink transition-colors hover:border-field-ink hover:bg-field-ink hover:text-field">
+                {tb.label} <span className="font-semibold text-crimson-600">{tb.grades}</span>
               </a>
             </li>
           ))}

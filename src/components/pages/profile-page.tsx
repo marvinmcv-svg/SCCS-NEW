@@ -149,7 +149,7 @@ export function SchoolProfilePage() {
             <Download className="h-5 w-5" aria-hidden="true" />
             {tr(P.download)}
           </a>
-          <p className="text-base font-semibold text-white/90">CEEB {P.ceeb}</p>
+          <p className="text-base font-semibold text-field-ink">CEEB {P.ceeb}</p>
         </div>
       </PageHero>
 

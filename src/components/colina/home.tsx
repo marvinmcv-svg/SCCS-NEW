@@ -100,7 +100,7 @@ export function Hero() {
         <p className="fade fade-15 mt-[max(14px,min(1.4vw,2vh))] t-body opacity-90 md:text-[min(var(--fs-body),3.2vh)]">{t.hero.sub}</p>
 
         <div className="fade fade-15 mt-[max(20px,min(2.4vw,3.5vh))] flex flex-col gap-[max(14px,min(1.4vw,2vh))]">
-          <Link href="/discover" className="eyebrow-rule hover:opacity-80">
+          <Link href="/discover" className="eyebrow-rule min-h-11 hover:opacity-80">
             {tr({ en: "Discover SCCS", es: "Descubre SCCS" })}
           </Link>
           <div>
@@ -112,7 +112,7 @@ export function Hero() {
 
         {/* Trust card: cream, pulled slightly left; logos 20% / words 80% */}
         <div className="fade fade-25 mb-[max(20px,2vh)] mt-[max(28px,3vh)] flex items-center gap-[1.5vw] rounded-[var(--radius-card)] bg-card px-[max(18px,2.2vw)] py-[max(14px,min(1.4vw,2vh))] md:-ml-[2.43vw] md:mt-auto">
-          <AccreditationLogos size="sm" className="w-[22%] min-w-[84px] shrink-0 flex-col !items-start !gap-[max(6px,0.7vh)] [&_img]:!h-[max(26px,min(2.6vw,4.4vh))]" />
+          <AccreditationLogos size="sm" className="w-[22%] min-w-[84px] shrink-0 flex-col !items-start !gap-0 md:!gap-[max(6px,0.7vh)] [&_a]:flex [&_a]:min-h-11 [&_a]:items-center md:[&_a]:min-h-0 [&_img]:!h-[max(30px,min(2.6vw,4.4vh))]" />
           <div>
             <h2 className="text-[max(20px,min(var(--fs-h2-sm),4.2vh))] font-normal leading-[1.15] text-field-ink">
               {tr({ en: "An accredited American international school", es: "Un colegio internacional americano acreditado" })}
@@ -197,7 +197,7 @@ function BannerCard({ area, photo, title, href, cta, sizes }: { area: string; ph
 /** Statement card: a grey eyebrow over a few light, large words with one bold phrase. */
 function StatementCard({ area, eyebrow, children }: { area: string; eyebrow: string; children: React.ReactNode }) {
   return (
-    <div data-rise className="card px-[10%] pt-[14%] text-center" style={{ gridArea: area }}>
+    <div data-rise className="card flex flex-col justify-center px-[10%] text-center md:block md:pt-[14%]" style={{ gridArea: area }}>
       <p className="t-label mb-[1.4em] text-slate">{eyebrow}</p>
       <p className="t-card-text text-field-ink [&_strong]:font-semibold">{children}</p>
     </div>

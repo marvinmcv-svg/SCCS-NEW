@@ -29,7 +29,7 @@ export function Breadcrumbs({ items, dark = true }: { items: Crumb[]; dark?: boo
                 {c.label}
               </span>
             ) : (
-              <Link href={c.href} className={dark ? "hover:text-amber-400" : "hover:text-field-ink"}>
+              <Link href={c.href} className={cn("inline-flex min-h-11 items-center md:min-h-0", dark ? "hover:text-amber-400" : "hover:text-field-ink")}>
                 {c.label}
               </Link>
             )}

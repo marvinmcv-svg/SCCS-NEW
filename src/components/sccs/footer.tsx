@@ -41,9 +41,10 @@ export function Footer() {
   ];
 
   const col = "flex flex-col";
-  const link = "link-grow mb-[0.75em] self-start leading-[1.4]";
+  // Phones get a full 44px tap row per link; desktop keeps the spec's tight list.
+  const link = "link-grow inline-flex min-h-11 items-center self-start leading-[1.4] md:mb-[0.75em] md:block md:min-h-0";
   return (
-    <footer id="footer" data-color="field" className="tabbar-safe mt-auto bg-field px-[1.74vw] py-[max(56px,8.33vw)] text-field-ink t-small">
+    <footer id="footer" data-color="field" className="tabbar-safe mt-auto bg-field px-[var(--gutter-page)] py-[max(56px,8.33vw)] text-field-ink t-small md:px-[1.74vw]">
       <div className="mx-auto flex max-w-[110rem] flex-col gap-12 md:flex-row">
         {/* Logo column: 35%, logo set to the right of it */}
         <div className="flex md:w-[35%] md:justify-end md:pr-[10%]">
@@ -80,7 +81,7 @@ export function Footer() {
             <a href={`mailto:${SITE.email}`} className={link}>
               {t.footer.email}
             </a>
-            <span className="mb-[0.75em] opacity-80">{t.footer.hours}</span>
+            <span className="flex min-h-11 items-center opacity-80 md:mb-[0.75em] md:block md:min-h-0">{t.footer.hours}</span>
             {t.footer.legal.map((l, i) => (
               <Link key={l} href={`/legal#${LEGAL_ANCHORS[i] ?? "privacy"}`} className={link}>
                 {l}

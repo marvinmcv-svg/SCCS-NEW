@@ -158,10 +158,10 @@ export function JobBoard() {
 
       <p className="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-sm text-mist">
         <span>{tr({ en: "Openings as posted by SCCS in October 2026.", es: "Vacantes publicadas por SCCS en octubre de 2026." })}</span>
-        <a href={JOBS_SOURCE_PAGE} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 font-semibold text-navy-800 hover:text-crimson-600">
+        <a href={JOBS_SOURCE_PAGE} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center gap-1 font-semibold text-navy-800 hover:text-crimson-600">
           sccs.edu.bo <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
         </a>
-        <a href={JOBS_INSTAGRAM_POST} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 font-semibold text-navy-800 hover:text-crimson-600">
+        <a href={JOBS_INSTAGRAM_POST} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center gap-1 font-semibold text-navy-800 hover:text-crimson-600">
           @sccsjaguars <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
         </a>
       </p>

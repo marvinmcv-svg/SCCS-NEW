@@ -81,7 +81,7 @@ export function TeamDirectory() {
                 <div className="min-w-0">
                   <p className="font-semibold text-navy-900">{m.name}</p>
                   <p className="text-sm text-mist">{tr(m.role)}</p>
-                  <span className="mt-1 inline-block rounded-full bg-cream px-2 py-0.5 text-[0.65rem] font-semibold uppercase tracking-wider text-navy-800">{c.categories[m.category]}</span>
+                  <span className="mt-1 inline-block rounded-full bg-cream px-2 py-0.5 text-xs font-semibold uppercase tracking-wider text-navy-800">{c.categories[m.category]}</span>
                 </div>
               </div>
               <button

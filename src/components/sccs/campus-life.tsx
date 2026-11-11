@@ -33,7 +33,7 @@ export function ExperienceTile({ exp, className, sizes, big }: { exp: Experience
       <Photo photo={exp.hero} className="absolute inset-0 -z-10" sizes={sizes} imgClassName="transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105" />
       <div className="absolute inset-0 -z-10 bg-gradient-to-t from-navy-950/85 via-navy-950/25 to-transparent" aria-hidden="true" />
       <div className="flex h-full flex-col justify-end p-5 sm:p-6">
-        <p className="text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-amber-400">{tr(exp.note)}</p>
+        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-amber-400">{tr(exp.note)}</p>
         <p className={cn("font-display mt-1.5 font-semibold text-white", big ? "text-3xl sm:text-4xl" : "text-xl sm:text-2xl")}>{tr(exp.title)}</p>
         {big && <p className="mt-2 max-w-md text-sm text-white/80 sm:text-base">{tr(exp.tagline)}</p>}
         <span className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-white/90 transition-colors group-hover:text-amber-400">
@@ -106,9 +106,9 @@ export function EventCard({ e }: { e: CampusEvent }) {
       <div className="flex items-start justify-between gap-3">
         <div className="flex w-16 flex-col items-center rounded-xl border border-border py-2">
           <span className="font-display text-2xl font-semibold leading-none text-navy-900">{format(d, "d", { locale: dateLocale })}</span>
-          <span className="mt-1 text-[0.65rem] font-bold uppercase tracking-widest text-crimson-600">{format(d, "MMM", { locale: dateLocale }).replace(".", "").toUpperCase()}</span>
+          <span className="mt-1 text-xs font-bold uppercase tracking-widest text-crimson-600">{format(d, "MMM", { locale: dateLocale }).replace(".", "").toUpperCase()}</span>
         </div>
-        <span className={cn("rounded-full px-2.5 py-1 text-[0.65rem] font-bold uppercase tracking-wider", DIVISION_CHIP[e.division])}>{divisionLabel}</span>
+        <span className={cn("rounded-full px-2.5 py-1 text-xs font-bold uppercase tracking-wider", DIVISION_CHIP[e.division])}>{divisionLabel}</span>
       </div>
       <p className="mt-3 text-xs capitalize text-mist">{format(d, "EEEE", { locale: dateLocale })}</p>
       <h3 className="mt-1 font-semibold leading-snug text-navy-900">{tr(e.title)}</h3>
@@ -157,7 +157,7 @@ export function NewsCard({ post, sizes = "(min-width:1024px) 33vw, 100vw" }: { p
       <Photo photo={post.image} className="aspect-[16/10]" sizes={sizes} imgClassName="transition-transform duration-700 group-hover:scale-105" />
       <div className="flex flex-1 flex-col p-6">
         <div className="flex items-center gap-3">
-          <span className={cn("rounded-full px-2.5 py-1 text-[0.65rem] font-bold uppercase tracking-wider", CATEGORY_CHIP[post.category])}>{tr(CATEGORY_LABEL[post.category])}</span>
+          <span className={cn("rounded-full px-2.5 py-1 text-xs font-bold uppercase tracking-wider", CATEGORY_CHIP[post.category])}>{tr(CATEGORY_LABEL[post.category])}</span>
           <time dateTime={post.date} className="text-xs text-mist">
             {format(parseISO(post.date), "MMMM d, yyyy", { locale: dateLocale })}
           </time>
@@ -180,7 +180,7 @@ export function NewsRow({ post }: { post: NewsPost }) {
       <Photo photo={post.image} className="aspect-square w-20 shrink-0 rounded-xl" sizes="80px" />
       <div className="min-w-0">
         <div className="flex items-center gap-2">
-          <span className={cn("rounded-full px-2 py-0.5 text-[0.6rem] font-bold uppercase tracking-wider", CATEGORY_CHIP[post.category])}>{tr(CATEGORY_LABEL[post.category])}</span>
+          <span className={cn("rounded-full px-2 py-0.5 text-xs font-bold uppercase tracking-wider", CATEGORY_CHIP[post.category])}>{tr(CATEGORY_LABEL[post.category])}</span>
           <time dateTime={post.date} className="text-xs text-mist">
             {format(parseISO(post.date), "MMMM d, yyyy", { locale: dateLocale })}
           </time>

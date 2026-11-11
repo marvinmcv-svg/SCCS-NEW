@@ -29,10 +29,10 @@ export function AdmissionsPage() {
     <>
       <PageHero photo={PAGE_PHOTOS.admissions.hero} kicker={a.kicker} title={a.title} lede={a.intro} crumbs={[{ href: "/admissions", label: t.nav.admissions }]}>
         <div className="flex flex-col gap-3 sm:flex-row">
-          <a href="#inquire" className={cn(buttonStyles.gold, "h-13 px-8")}>
+          <a href="#inquire" className={cn(buttonStyles.gold, "h-13 px-8 text-base")}>
             {t.hero.ctaPrimary}
           </a>
-          <a href="#inquire" className={cn(buttonStyles.outlineDark, "h-13 px-8")}>
+          <a href="#inquire" className="btn-outline h-13 px-8 !text-base text-field-ink">
             {t.hero.ctaSecondary}
           </a>
         </div>
@@ -268,7 +268,7 @@ export function NewsArticle({ post }: { post: NewsPost }) {
   return (
     <>
       <PageHero photo={post.image} kicker={tr(CATEGORY_LABEL[post.category])} title={tr(post.title)} crumbs={[{ href: "/news", label: t.campusLife.newsTitle }, { href: `/news/${post.slug}`, label: tr(post.title) }]}>
-        <time dateTime={post.date} className="text-sm text-white/75">
+        <time dateTime={post.date} className="text-sm text-slate">
           {format(parseISO(post.date), "MMMM d, yyyy", { locale: dateLocale })}
         </time>
       </PageHero>
@@ -282,7 +282,7 @@ export function NewsArticle({ post }: { post: NewsPost }) {
               ))}
             </div>
             <div className="mt-10 flex flex-wrap items-center gap-3">
-              <span className={cn("rounded-full px-2.5 py-1 text-[0.65rem] font-bold uppercase tracking-wider", CATEGORY_CHIP[post.category])}>{tr(CATEGORY_LABEL[post.category])}</span>
+              <span className={cn("rounded-full px-2.5 py-1 text-xs font-bold uppercase tracking-wider", CATEGORY_CHIP[post.category])}>{tr(CATEGORY_LABEL[post.category])}</span>
               {post.instagramUrl && (
                 <a href={post.instagramUrl} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-navy-600 hover:text-navy-800">
                   {t.page.viewOnInstagram}
