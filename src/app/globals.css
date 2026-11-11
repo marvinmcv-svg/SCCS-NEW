@@ -1,0 +1,260 @@
+@import "tailwindcss";
+
+@theme {
+  --color-navy-950: #14143A;
+  --color-navy-900: #1B1B4D;
+  --color-navy-800: #292963;
+  --color-navy-700: #34347A;
+  --color-navy-600: #3D3D8F;
+  --color-navy-500: #6868B8;
+  --color-navy-100: #E9E9F4;
+  --color-crimson-700: #961A2A;
+  --color-crimson-600: #B72034;
+  --color-crimson-100: #F8E3E6;
+  --color-amber-600: #E08F0B;
+  --color-amber-500: #F8A724;
+  --color-amber-400: #FBBD4D;
+  --color-amber-100: #FEF1D8;
+  --color-ivory: #fbfaf7;
+  --color-cream: #f5f4ef;
+  /* Page ground: a pale wash of the brand navy. Cards sit on it in ivory. */
+  --color-tint: #ebebf5;
+  --color-charcoal: #1a1a1a;
+  --color-mist: #5d5f72;
+
+  --color-background: #ebebf5;
+  --color-foreground: #1a1a1a;
+  --color-primary: #292963;
+  --color-primary-foreground: #fbfaf7;
+  --color-muted: #f5f4ef;
+  --color-muted-foreground: #5d5f72;
+  --color-border: #e2e0d8;
+  --color-input: #e2e0d8;
+  --color-ring: #F8A724;
+  --color-card: #ffffff;
+
+  --radius: 0.75rem;
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-fraunces), Georgia, serif;
+
+  --ease-signature: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    background: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    font-feature-settings: "ss01" on, "cv11" on;
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection {
+    background: #F8A724;
+    color: #14143A;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-ring);
+    outline-offset: 2px;
+  }
+}
+
+/* Display type: the same clean grotesk as the body, set tight and heavy. */
+@utility font-display {
+  font-family: var(--font-sans);
+  letter-spacing: -0.035em;
+}
+
+/* An inset, rounded panel that floats on the tinted page ground. */
+@utility panel {
+  margin-inline: 0.75rem;
+  border-radius: 2rem;
+  overflow: hidden;
+  @media (min-width: 640px) {
+    margin-inline: 1.25rem;
+  }
+  @media (min-width: 1024px) {
+    margin-inline: 2rem;
+  }
+}
+
+@utility font-brand {
+  font-family: var(--font-brand), "Century Gothic", ui-sans-serif, sans-serif;
+}
+
+@utility pressable {
+  transition: transform 120ms var(--ease-signature);
+  &:active {
+    transform: scale(0.97);
+  }
+}
+
+@utility tabbar-safe {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+@utility ios-scroll {
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgb(93 95 114 / 0.4) transparent;
+  &::-webkit-scrollbar {
+    width: 3px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: rgb(93 95 114 / 0.4);
+    border-radius: 999px;
+  }
+}
+
+@utility sccs-link-underline {
+  position: relative;
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -4px;
+    height: 1.5px;
+    background: #F8A724;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 250ms var(--ease-signature);
+  }
+  &:hover::after,
+  &:focus-visible::after,
+  &[data-active="true"]::after {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes sccs-kenburns {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.08) translateY(-1.2%);
+  }
+}
+@utility sccs-kenburns {
+  animation: sccs-kenburns 22s ease-out forwards;
+}
+
+@keyframes sccs-pin-pulse {
+  from {
+    transform: scale(0.9);
+    opacity: 0.6;
+  }
+  to {
+    transform: scale(2.2);
+    opacity: 0;
+  }
+}
+@utility sccs-pin-pulse {
+  animation: sccs-pin-pulse 2.6s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+@keyframes sccs-scroll-cue {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(7px);
+  }
+}
+@utility sccs-scroll-cue {
+  animation: sccs-scroll-cue 1.9s ease-in-out infinite;
+}
+
+@keyframes sccs-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+@utility sccs-marquee {
+  animation: sccs-marquee 48s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .sccs-kenburns,
+  .sccs-pin-pulse,
+  .sccs-scroll-cue,
+  .sccs-marquee {
+    animation: none !important;
+  }
+}
+
+/* Carlita's launcher: a soft ring that breathes outward every few seconds. */
+@keyframes carlita-pulse {
+  0% { transform: scale(1); opacity: 0.7; }
+  70% { transform: scale(1.45); opacity: 0; }
+  100% { transform: scale(1.45); opacity: 0; }
+}
+@utility carlita-pulse {
+  animation: carlita-pulse 2.8s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+
+/* ── Carlita, the animated character (carlita-character.tsx) ─────────────── */
+.carlita-char * { transform-box: fill-box; }
+.carlita-char .cc-body { transform-origin: 50% 100%; }
+.carlita-char .cc-head { transform-origin: 50% 90%; transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1); }
+.carlita-char .cc-eye { transform-origin: 50% 50%; }
+.carlita-char .cc-pupil { transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1); }
+.carlita-char .cc-brows { transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1); }
+.carlita-char .cc-earring { transform-origin: 50% 0%; }
+.carlita-char .cc-talk { opacity: 0; transform-origin: 50% 20%; }
+
+/* Thinking: glance up, lift brows, tilt */
+.carlita-char[data-mood="thinking"] .cc-pupil { transform: translate(1.2px, -1.3px); }
+.carlita-char[data-mood="thinking"] .cc-brows { transform: translateY(-1.6px); }
+.carlita-char[data-mood="thinking"] .cc-head { transform: rotate(-5deg); }
+
+/* Talking: swap the smile for a moving mouth */
+.carlita-char[data-mood="talking"] .cc-smile { opacity: 0; }
+.carlita-char[data-mood="talking"] .cc-talk { opacity: 1; }
+
+/* Greeting: a cool chin-up nod with raised brows */
+.carlita-char[data-mood="wave"] .cc-brows { transform: translateY(-1.4px); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .carlita-char .cc-body { animation: cc-breathe 4.2s ease-in-out infinite; }
+  .carlita-char .cc-eye { animation: cc-blink 5.5s infinite; }
+  .carlita-char .cc-earring-l { animation: cc-sway 3.2s ease-in-out infinite; }
+  .carlita-char .cc-earring-r { animation: cc-sway 3.2s ease-in-out -1.6s infinite; }
+  .carlita-char[data-mood="idle"] .cc-head { animation: cc-nod 6s ease-in-out infinite; }
+  .carlita-char[data-mood="wave"] .cc-head { animation: cc-sup 2.6s cubic-bezier(0.22, 1, 0.36, 1) infinite; }
+  .carlita-char[data-mood="thinking"] .cc-head { animation: cc-ponder 2.4s ease-in-out infinite; }
+  .carlita-char[data-mood="talking"] .cc-talk { animation: cc-talk 0.32s ease-in-out infinite alternate; }
+  .carlita-char[data-mood="talking"] .cc-head { animation: cc-chat 1.6s ease-in-out infinite; }
+}
+
+@keyframes cc-breathe { 0%, 100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-0.8px) scale(1.012); } }
+@keyframes cc-blink { 0%, 92%, 100% { transform: scaleY(1); } 95% { transform: scaleY(0.08); } }
+@keyframes cc-sway { 0%, 100% { transform: rotate(-7deg); } 50% { transform: rotate(7deg); } }
+@keyframes cc-nod { 0%, 100% { transform: rotate(0deg); } 30% { transform: rotate(-2.5deg); } 65% { transform: rotate(2deg); } }
+@keyframes cc-ponder { 0%, 100% { transform: rotate(-5deg); } 50% { transform: rotate(-2.5deg) translateY(-0.6px); } }
+@keyframes cc-chat { 0%, 100% { transform: rotate(0deg); } 25% { transform: rotate(1.8deg); } 75% { transform: rotate(-1.8deg); } }
+@keyframes cc-talk { 0% { transform: scaleY(0.35); } 100% { transform: scaleY(1.05); } }
+@keyframes cc-sup { 0%, 55%, 100% { transform: rotate(0deg) translateY(0); } 18% { transform: rotate(-4deg) translateY(-2px); } 34% { transform: rotate(1deg) translateY(0.4px); } }

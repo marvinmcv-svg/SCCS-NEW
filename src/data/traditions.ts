@@ -1,0 +1,366 @@
+import { media, type Photo } from "./media";
+import type { L } from "@/lib/i18n-types";
+
+export type TraditionGroup = "clubs" | "academic" | "civic" | "family";
+
+export type Tradition = {
+  slug: string;
+  group: TraditionGroup;
+  title: L;
+  tagline: L;
+  image: Photo;
+  when: L;
+  who: L;
+  where: L;
+  body: L[];
+  expect: L[];
+  gallery?: Photo[];
+};
+
+export const TRADITION_GROUPS: Record<TraditionGroup, { title: L; intro: L }> = {
+  clubs: {
+    title: { en: "Clubs & Teams", es: "Clubes y Equipos" },
+    intro: {
+      en: "Where Jaguars lead: debating world affairs at MUN, building robots for the world stage, serving the community, and running the student government.",
+      es: "Donde los Jaguars lideran: debatiendo asuntos mundiales en el MUN, construyendo robots para el escenario mundial, sirviendo a la comunidad y dirigiendo el gobierno estudiantil.",
+    },
+  },
+  academic: {
+    title: { en: "Academic & Intellectual Showcases", es: "Vitrinas Académicas e Intelectuales" },
+    intro: {
+      en: "We turn learning into celebration. Bowls and bees are arenas for quick thinking — and stages for showing what two languages and one rigorous curriculum can do.",
+      es: "Convertimos el aprendizaje en celebración. Los bowls y concursos son arenas de pensamiento ágil — y escenarios para mostrar lo que pueden lograr dos idiomas y un currículo exigente.",
+    },
+  },
+  civic: {
+    title: { en: "Traditions & Civic Spirit", es: "Tradiciones y Espíritu Cívico" },
+    intro: {
+      en: "From the cultural pride of Santa Cruz Day to the all-ages energy of the Fun Run, these are the days the whole pride shows up.",
+      es: "Del orgullo cultural del Día de Santa Cruz a la energía del Fun Run para todas las edades, estos son los días en que todo el orgullo jaguar se hace presente.",
+    },
+  },
+  family: {
+    title: { en: "Family & Legacy Milestones", es: "Hitos de Familia y Legado" },
+    intro: {
+      en: "An SCCS education includes the whole family. These are the moments we honor the generations — and the people — behind every Jaguar.",
+      es: "Una educación SCCS incluye a toda la familia. Estos son los momentos en que honramos a las generaciones — y a las personas — detrás de cada Jaguar.",
+    },
+  },
+};
+
+export const TRADITIONS: Tradition[] = [
+  {
+    slug: "model-united-nations",
+    group: "clubs",
+    title: { en: "Model United Nations", es: "Model United Nations" },
+    tagline: { en: "Suits on, placards up: Jaguars debate the world's hardest questions.", es: "Traje puesto, placa en alto: los Jaguars debaten las preguntas más difíciles del mundo." },
+    image: media.dMunDelegatesGarden,
+    gallery: [media.dMunDelegatesPac, media.dMunDais, media.clubMunCommittee, media.dMunBoys, media.clubMunDelegates, media.dMunWallOfFame, media.dMunPodium],
+    when: { en: "All year, with a three-day SCCS conference", es: "Todo el año, con una conferencia SCCS de tres días" },
+    who: { en: "Middle and High School delegates", es: "Delegados de Middle y High School" },
+    where: { en: "Performing Arts Center and committee rooms", es: "Performing Arts Center y salas de comité" },
+    body: [
+      { en: "SCCS MUN turns students into delegates. Each one represents a country, researches its position, writes resolutions and negotiates with other delegations, in English, under formal parliamentary procedure.", es: "SCCS MUN convierte a los estudiantes en delegados. Cada uno representa a un país, investiga su postura, redacta resoluciones y negocia con otras delegaciones, en inglés y bajo procedimiento parlamentario formal." },
+      { en: "Students chair the committees themselves, and the school hosts its own three-day conference in the Performing Arts Center, alongside internal MUN events that bring new delegates into the program.", es: "Los propios estudiantes presiden los comités, y el colegio organiza su propia conferencia de tres días en el Performing Arts Center, además de eventos internos de MUN que incorporan nuevos delegados al programa." },
+    ],
+    expect: [
+      { en: "Research, position papers and public speaking", es: "Investigación, documentos de posición y oratoria" },
+      { en: "Student-run committees and chairs", es: "Comités y mesas dirigidos por estudiantes" },
+      { en: "Formal dress and diplomatic protocol", es: "Vestimenta formal y protocolo diplomático" },
+    ],
+  },
+  {
+    slug: "robotics-vex",
+    group: "clubs",
+    title: { en: "Robotics & VEX", es: "Robótica y VEX" },
+    tagline: { en: "From the Innovation Hub to the VEX Robotics World Championship.", es: "Del Innovation Hub al Campeonato Mundial de Robótica VEX." },
+    image: media.dVexWorldsTeam,
+    gallery: [media.dVexWorldsBoliviaFlag, media.dVexWorldsField, media.dVexWorldsMatch, media.dVexRobotProud, media.dVexWorldsTeamCoaches, media.dVexTeamDallas],
+    when: { en: "After school, all year", es: "Después de clases, todo el año" },
+    who: { en: "Elementary and Middle School teams", es: "Equipos de Elementary y Middle School" },
+    where: { en: "The Innovation Hub", es: "El Innovation Hub" },
+    body: [
+      { en: "Jaguar robotics teams design, build and program their own VEX robots, then put them on the field against the clock and against other teams. Engineering notebooks, driver practice and judges' interviews are all part of the work.", es: "Los equipos de robótica Jaguar diseñan, construyen y programan sus propios robots VEX y luego los ponen a competir contra el reloj y contra otros equipos. El cuaderno de ingeniería, la práctica de manejo y las entrevistas con los jueces son parte del trabajo." },
+      { en: "In 2025 our teams reached the VEX Robotics World Championship in Dallas, Texas, carrying the Bolivian flag onto the world stage alongside thousands of students from around the globe.", es: "En 2025 nuestros equipos llegaron al Campeonato Mundial de Robótica VEX en Dallas, Texas, llevando la bandera de Bolivia al escenario mundial junto a miles de estudiantes de todo el planeta." },
+    ],
+    expect: [
+      { en: "Build, code and drive competition robots", es: "Construir, programar y manejar robots de competencia" },
+      { en: "Regional events and the World Championship", es: "Torneos regionales y el Campeonato Mundial" },
+      { en: "Teamwork, engineering notebooks and judges' interviews", es: "Trabajo en equipo, cuadernos de ingeniería y entrevistas con jueces" },
+    ],
+  },
+  {
+    slug: "student-council",
+    group: "clubs",
+    title: { en: "Student Council (StuCo)", es: "Consejo Estudiantil (StuCo)" },
+    tagline: { en: "The student voice of SCCS, elected by Jaguars, for Jaguars.", es: "La voz estudiantil de SCCS, elegida por Jaguars, para Jaguars." },
+    image: media.clubStucoHogar,
+    gallery: [media.clubStucoReading, media.clubStucoBakeSale, media.clubStucoTrio, media.stuco],
+    when: { en: "Elected each school year", es: "Elegido cada año escolar" },
+    who: { en: "Middle and High School representatives", es: "Representantes de Middle y High School" },
+    where: { en: "Across campus", es: "En todo el campus" },
+    body: [
+      { en: "Middle School StuCo is a laboratory for civic agency: students research school-wide needs, propose solutions to administration, and lead campaigns for Earth Day and bullying prevention.", es: "El StuCo de Middle School es un laboratorio de agencia cívica: los estudiantes investigan necesidades del colegio, proponen soluciones a la dirección y lideran campañas por el Día de la Tierra y la prevención del acoso." },
+      { en: "High School StuCo is the pinnacle of student governance: officers produce monthly video dispatches, lead campaigns for International Women's Day and other global milestones, and represent the student voice in high-level discussions.", es: "El StuCo de High School es la cumbre del gobierno estudiantil: sus integrantes producen reportes mensuales en video, lideran campañas por el Día Internacional de la Mujer y otras fechas globales, y representan la voz estudiantil en las decisiones importantes." },
+    ],
+    expect: [
+      { en: "Elections, campaigns and speeches", es: "Elecciones, campañas y discursos" },
+      { en: "School events planned and run by students", es: "Eventos escolares planificados y dirigidos por estudiantes" },
+      { en: "A seat at the table with school leadership", es: "Un lugar en la mesa con la dirección del colegio" },
+    ],
+  },
+  {
+    slug: "operation-smile",
+    group: "clubs",
+    title: { en: "Operation Smile Club", es: "Club Operation Smile" },
+    tagline: { en: "Jaguars raising funds and awareness so more children can smile.", es: "Jaguars que recaudan fondos y crean conciencia para que más niños puedan sonreír." },
+    image: media.clubOsVolunteers,
+    gallery: [media.clubOsChefs, media.clubOsTwoChefs, media.clubOsHearts, media.clubOsGroup],
+    when: { en: "Campaigns throughout the year", es: "Campañas durante todo el año" },
+    who: { en: "High School volunteers", es: "Voluntarios de High School" },
+    where: { en: "On campus and in the community", es: "En el campus y en la comunidad" },
+    body: [
+      { en: "Operation Smile is an international medical charity that provides free, safe surgery for children born with cleft lip and cleft palate. Our student club supports its mission here in Bolivia.", es: "Operation Smile es una organización médica internacional que ofrece cirugías gratuitas y seguras a niños nacidos con labio y paladar hendido. Nuestro club estudiantil apoya su misión aquí en Bolivia." },
+      { en: "Members organize fundraisers and awareness campaigns on campus, and learn first-hand how service, empathy and organization change lives.", es: "Sus integrantes organizan campañas de recaudación y concientización en el campus, y aprenden de primera mano cómo el servicio, la empatía y la organización cambian vidas." },
+      { en: "In 2026 our volunteers put on aprons and chefs' hats for La Sonrisa la Pongo Yo, a charity cooking event raising funds for Operation Smile.", es: "En 2026 nuestros voluntarios se pusieron delantales y gorros de chef para La Sonrisa la Pongo Yo, un evento gastronómico benéfico a favor de Operation Smile." },
+    ],
+    expect: [
+      { en: "Fundraising campaigns and events", es: "Campañas y eventos de recaudación" },
+      { en: "Awareness drives across divisions", es: "Campañas de concientización en todas las divisiones" },
+      { en: "Service hours and leadership experience", es: "Horas de servicio y experiencia de liderazgo" },
+    ],
+  },
+  {
+    slug: "manitos",
+    group: "clubs",
+    title: { en: "Manitos", es: "Manitos" },
+    tagline: { en: "Students helping people born with a hand disability.", es: "Estudiantes que ayudan a personas nacidas con una discapacidad en las manos." },
+    image: media.clubManitosHero,
+    gallery: [media.clubManitosGirl, media.clubManitosClass, media.clubManitosBoy, media.clubManitosTeam],
+    when: { en: "Campaigns throughout the year", es: "Campañas durante todo el año" },
+    who: { en: "Student volunteers", es: "Estudiantes voluntarios" },
+    where: { en: "On campus and in the community", es: "En el campus y en la comunidad" },
+    body: [
+      { en: "Manitos is an SCCS service club that raises money for people who were born with a hand disability.", es: "Manitos es un club de servicio de SCCS que recauda fondos para personas que nacieron con una discapacidad en las manos." },
+      { en: "On Valentine's Day, Manitos runs a heart-cookie sale that reaches classrooms across the school, raising money for the cause.", es: "En San Valentín, Manitos organiza una venta de galletas de corazón que llega a las aulas de todo el colegio y recauda fondos para la causa." },
+      { en: "Students plan and run the campaigns themselves, turning school spirit into real support for the people the club serves.", es: "Los estudiantes planifican y dirigen sus propias campañas, convirtiendo el espíritu escolar en apoyo real para las personas a las que sirve el club." },
+    ],
+    expect: [
+      { en: "Student-led fundraising", es: "Recaudación dirigida por estudiantes" },
+      { en: "Empathy and real-world impact", es: "Empatía e impacto real" },
+      { en: "Service hours and leadership experience", es: "Horas de servicio y experiencia de liderazgo" },
+    ],
+  },
+  {
+    slug: "ai-club",
+    group: "clubs",
+    title: { en: "AI Club", es: "Club de IA" },
+    tagline: { en: "Coming soon: Jaguars learning to build with artificial intelligence.", es: "Muy pronto: Jaguars que aprenden a crear con inteligencia artificial." },
+    image: media.dScienceCircuitsTeam,
+    gallery: [media.dScienceCircuits, media.dStemCupChallenge],
+    when: { en: "Launching soon", es: "Muy pronto" },
+    who: { en: "Middle and High School students", es: "Estudiantes de Middle y High School" },
+    where: { en: "The Innovation Hub", es: "El Innovation Hub" },
+    body: [
+      { en: "The AI Club is the newest addition to SCCS clubs. Students will explore how artificial intelligence works, use it responsibly, and build their own projects with it.", es: "El Club de IA es la incorporación más reciente a los clubes de SCCS. Los estudiantes explorarán cómo funciona la inteligencia artificial, aprenderán a usarla con responsabilidad y crearán sus propios proyectos." },
+      { en: "It builds on the Innovation Hub and our robotics program, where Jaguars already design, code and test their own ideas.", es: "Se apoya en el Innovation Hub y en nuestro programa de robótica, donde los Jaguars ya diseñan, programan y prueban sus propias ideas." },
+    ],
+    expect: [
+      { en: "How AI works, explained hands-on", es: "Cómo funciona la IA, de forma práctica" },
+      { en: "Responsible and ethical use", es: "Uso responsable y ético" },
+      { en: "Student-built AI projects", es: "Proyectos de IA creados por estudiantes" },
+    ],
+  },
+  {
+    slug: "math-bowl",
+    group: "academic",
+    title: { en: "Math Bowl", es: "Math Bowl" },
+    tagline: { en: "Speed, strategy, and the sweet sound of a correct answer.", es: "Velocidad, estrategia y el dulce sonido de una respuesta correcta." },
+    image: media.igMath3,
+    gallery: [media.igMath1, media.igMath2, media.igMath4],
+    when: { en: "November", es: "Noviembre" },
+    who: { en: "Middle School teams", es: "Equipos de Middle School" },
+    where: { en: "Performing Arts Center", es: "Performing Arts Center" },
+    body: [
+      { en: "The Math Bowl is an SCCS classic: middle school teams race the clock through rounds of mental math, logic puzzles, and multi-step problems, with classmates cheering from the seats.", es: "El Math Bowl es un clásico de SCCS: equipos de Middle School compiten contra el reloj en rondas de cálculo mental, acertijos lógicos y problemas de varios pasos, mientras sus compañeros alientan desde las butacas." },
+      { en: "It's the public face of the number sense we build from Pre-K with Reveal Math — and proof that being good at math can be the coolest thing in the room.", es: "Es la cara pública del sentido numérico que construimos desde Pre-Kínder con Reveal Math — y la prueba de que ser bueno en matemáticas puede ser lo más genial del salón." },
+    ],
+    expect: [
+      { en: "House rounds by grade, then a championship final", es: "Rondas internas por grado y luego una gran final" },
+      { en: "Individual sprint and team relay formats", es: "Formatos de velocidad individual y relevo por equipos" },
+      { en: "Families welcome in the audience", es: "Familias bienvenidas en el público" },
+    ],
+  },
+  {
+    slug: "knowledge-bowl",
+    group: "academic",
+    title: { en: "Knowledge Bowl", es: "Knowledge Bowl" },
+    tagline: { en: "History, science, literature — and a buzzer.", es: "Historia, ciencia, literatura — y un pulsador." },
+    image: media.fgStudents,
+    when: { en: "Friendship Games + regional rounds", es: "Friendship Games + rondas regionales" },
+    who: { en: "High School team", es: "Equipo de High School" },
+    where: { en: "Performing Arts Center", es: "Performing Arts Center" },
+    body: [
+      { en: "Since 2017 the Knowledge Bowl has been part of the Friendship Games, putting the scholar on the same podium as the striker. Our team has been defending its title ever since.", es: "Desde 2017 el Knowledge Bowl forma parte de los Friendship Games, poniendo al académico en el mismo podio que al goleador. Nuestro equipo ha defendido su título desde entonces." },
+      { en: "Practices mix AP-level content with rapid-fire general knowledge — the same breadth and recall that make our graduates formidable in university seminars.", es: "Los entrenamientos combinan contenido de nivel AP con cultura general a toda velocidad — la misma amplitud y memoria que hacen formidables a nuestros graduados en los seminarios universitarios." },
+    ],
+    expect: [
+      { en: "Weekly after-school practice", es: "Práctica semanal después de clases" },
+      { en: "Competition against ACS, CCS, and AISB", es: "Competencia contra ACS, CCS y AISB" },
+      { en: "Regional rounds hosted in the PAC", es: "Rondas regionales en el PAC" },
+    ],
+  },
+  {
+    slug: "spelling-bee",
+    group: "academic",
+    title: { en: "Spelling Bee", es: "Spelling Bee" },
+    tagline: { en: "One word at a time, in front of everyone.", es: "Una palabra a la vez, frente a todos." },
+    image: media.esAwardsStage,
+    when: { en: "Spring semester", es: "Semestre de primavera" },
+    who: { en: "Elementary & Middle School", es: "Elementary y Middle School" },
+    where: { en: "Performing Arts Center", es: "Performing Arts Center" },
+    body: [
+      { en: "Separate Elementary and Middle School bees take the stage each year. Spellers ask for the definition, the origin, the word in a sentence — and then step up to the microphone.", es: "Cada año suben al escenario un Spelling Bee de Elementary y otro de Middle School. Los participantes piden la definición, el origen, la palabra en una oración — y luego se acercan al micrófono." },
+      { en: "It's English mastery on display, and it's courage: standing alone under the lights and trusting what you know.", es: "Es el dominio del inglés en exhibición, y es valentía: estar solo bajo las luces y confiar en lo que sabes." },
+    ],
+    expect: [
+      { en: "Classroom rounds lead to a division final", es: "Rondas por aula que llevan a una final por división" },
+      { en: "Word lists shared with families in advance", es: "Listas de palabras compartidas con las familias por adelantado" },
+      { en: "Every speller recognized on stage", es: "Cada participante reconocido en el escenario" },
+    ],
+  },
+  {
+    slug: "book-fair",
+    group: "academic",
+    title: { en: "Book Fair", es: "Feria del Libro" },
+    tagline: { en: "A whole week where the library comes to you.", es: "Una semana entera donde la biblioteca viene a ti." },
+    image: media.bookFair,
+    gallery: [media.library, media.libraryLounge],
+    when: { en: "October", es: "Octubre" },
+    who: { en: "All divisions & families", es: "Todas las divisiones y familias" },
+    where: { en: "Library Media Center", es: "Library Media Center" },
+    body: [
+      { en: "For a full week the Library Media Center becomes a bookstore: bilingual titles, author visits, story hours, and the delicious agony of choosing just one more book.", es: "Durante una semana completa, el Library Media Center se convierte en librería: títulos bilingües, visitas de autores, horas de cuento y la deliciosa agonía de elegir solo un libro más." },
+      { en: "It's a week built to send every Jaguar home with a book they chose themselves — the first step to reading for life.", es: "Es una semana pensada para que cada Jaguar vuelva a casa con un libro elegido por sí mismo — el primer paso para leer toda la vida." },
+    ],
+    expect: [
+      { en: "English and Spanish titles for every age", es: "Títulos en inglés y español para todas las edades" },
+      { en: "Author visits and story hours", es: "Visitas de autores y horas de cuento" },
+      { en: "Families welcome to browse together", es: "Familias bienvenidas a recorrerla juntas" },
+    ],
+  },
+  {
+    slug: "family-reading-night",
+    group: "academic",
+    title: { en: "Family Reading Night", es: "Noche Familiar de Lectura" },
+    tagline: { en: "Pajamas optional. Stories mandatory.", es: "Pijamas opcionales. Cuentos obligatorios." },
+    image: media.igReadingNight1,
+    gallery: [media.igReadingNight2, media.igReadingNight3, media.igReadingNight4, media.igReadingNight5, media.igReadingStory],
+    when: { en: "Start of the school year", es: "Inicio del año escolar" },
+    who: { en: "Families of every division", es: "Familias de todas las divisiones" },
+    where: { en: "Library Media Center", es: "Library Media Center" },
+    body: [
+      { en: "Our library fills with families, smiles, and stories for an evening of reading together — parents and children side by side, story circles on the rug, and volunteers guiding the youngest readers.", es: "Nuestra biblioteca se llena de familias, sonrisas e historias para una noche de lectura compartida — padres e hijos lado a lado, círculos de cuentos sobre la alfombra y voluntarios que guían a los lectores más pequeños." },
+      { en: "It's how we kick off the year: bringing people, stories, and generations together through the love of reading.", es: "Así comenzamos el año: reuniendo personas, historias y generaciones a través del amor por la lectura." },
+    ],
+    expect: [
+      { en: "Bilingual storytelling for all ages", es: "Narración bilingüe para todas las edades" },
+      { en: "Student volunteers and librarians on hand", es: "Estudiantes voluntarios y bibliotecarios presentes" },
+      { en: "Cozy reading corners and story circles", es: "Rincones de lectura y círculos de cuentos" },
+    ],
+  },
+  {
+    slug: "santa-cruz-day",
+    group: "civic",
+    title: { en: "Santa Cruz Day", es: "Día de Santa Cruz" },
+    tagline: { en: "Green, white, and proud of where we're from.", es: "Verde, blanco y orgullosos de dónde venimos." },
+    image: media.santaCruzDay,
+    when: { en: "Around September 24", es: "Alrededor del 24 de septiembre" },
+    who: { en: "The whole school", es: "Todo el colegio" },
+    where: { en: "Across campus", es: "Todo el campus" },
+    body: [
+      { en: "An American education, rooted in Santa Cruz. On Santa Cruz Day the campus turns green and white for music, traditional food, dance, and the cultural pride of the city that has been our home since 1959.", es: "Una educación americana, con raíces en Santa Cruz. En el Día de Santa Cruz el campus se viste de verde y blanco con música, comida típica, danza y el orgullo cultural de la ciudad que es nuestro hogar desde 1959." },
+      { en: "It's the Bolivian half of our dual identity, celebrated out loud — and a reminder that our graduates leave to build the world and come back to build Bolivia.", es: "Es la mitad boliviana de nuestra doble identidad, celebrada en voz alta — y un recordatorio de que nuestros graduados salen a construir el mundo y regresan a construir Bolivia." },
+    ],
+    expect: [
+      { en: "Traditional dress and dances", es: "Trajes típicos y danzas tradicionales" },
+      { en: "Cruceño food prepared with families", es: "Comida cruceña preparada con las familias" },
+      { en: "Student performances in every division", es: "Presentaciones estudiantiles en cada división" },
+    ],
+  },
+  {
+    slug: "fun-run",
+    group: "civic",
+    title: { en: "Fun Run", es: "Fun Run" },
+    tagline: { en: "Eight acres. One lap. Every Jaguar.", es: "Ocho acres. Una vuelta. Cada Jaguar." },
+    image: media.campusLawn,
+    gallery: [media.campusPlayground, media.fgWaterGames],
+    when: { en: "November", es: "Noviembre" },
+    who: { en: "Students, families, faculty, alumni", es: "Estudiantes, familias, docentes y egresados" },
+    where: { en: "The campus loop", es: "El circuito del campus" },
+    body: [
+      { en: "Organized with the Mother's Club, the Fun Run sends the whole pride around the campus loop — toddlers on shoulders, seniors racing teachers, grandparents cheering from the shade of the palapas.", es: "Organizado junto al Mother's Club, el Fun Run lleva a todo el orgullo jaguar alrededor del circuito del campus — pequeños en hombros, seniors compitiendo con sus maestros y abuelos alentando a la sombra de las palapas." },
+      { en: "Nobody keeps score, everybody finishes, and the day ends with family games on the lawn.", es: "Nadie lleva la cuenta, todos llegan a la meta y el día termina con juegos familiares en el prado." },
+    ],
+    expect: [
+      { en: "All ages welcome — run, jog, or walk", es: "Todas las edades — corre, trota o camina" },
+      { en: "Family Day games and food afterward", es: "Juegos y comida del Día de la Familia al terminar" },
+      { en: "Co-hosted with the Mother's Club", es: "Organizado junto al Mother's Club" },
+    ],
+  },
+  {
+    slug: "grandparents-day",
+    group: "family",
+    title: { en: "Grandparents' Day", es: "Día de los Abuelos" },
+    tagline: { en: "Two generations, one campus.", es: "Dos generaciones, un campus." },
+    image: media.mothersClub,
+    when: { en: "March", es: "Marzo" },
+    who: { en: "Grandparents & Elementary students", es: "Abuelos y estudiantes de Elementary" },
+    where: { en: "Classrooms & Performing Arts Center", es: "Aulas y Performing Arts Center" },
+    body: [
+      { en: "Grandparents walk the campus with their grandchildren — coffee, open classrooms, student performances, and more than a few proud tears.", es: "Los abuelos recorren el campus con sus nietos — café, aulas abiertas, presentaciones estudiantiles y más de una lágrima de orgullo." },
+      { en: "For some families it's a homecoming — grandparents who once wore the Jaguar colors themselves. It's our multigenerational legacy, in one morning.", es: "Para algunas familias es un regreso a casa — abuelos que alguna vez también vistieron los colores Jaguar. Es nuestro legado multigeneracional, en una sola mañana." },
+    ],
+    expect: [
+      { en: "Open classrooms and student-led tours", es: "Aulas abiertas y recorridos guiados por estudiantes" },
+      { en: "Performances in the PAC", es: "Presentaciones en el PAC" },
+      { en: "Coffee and conversation", es: "Café y conversación" },
+    ],
+  },
+  {
+    slug: "senior-welcome-dinner",
+    group: "family",
+    title: { en: "Senior Welcome Dinner", es: "Cena de Bienvenida a Seniors" },
+    tagline: { en: "The first night of the final chapter.", es: "La primera noche del último capítulo." },
+    image: media.mothersClubCelebration,
+    gallery: [media.mothersClubTeam, media.mothersClubGroup],
+    when: { en: "Start of senior year", es: "Inicio del último año" },
+    who: { en: "Seniors, families, faculty", es: "Seniors, familias y docentes" },
+    where: { en: "On campus", es: "En el campus" },
+    body: [
+      { en: "Hosted by the Mother's Club, the Senior Welcome Dinner opens the final year with an evening in the seniors' honor — speeches, a few embarrassing childhood photos, and a toast to what comes next.", es: "Organizada por el Mother's Club, la Cena de Bienvenida a Seniors abre el último año con una velada en honor de los graduandos — discursos, algunas fotos de infancia vergonzosas y un brindis por lo que viene." },
+      { en: "It's the start of the year that ends on the PAC stage with two diplomas — and the night many seniors remember as the moment it all became real.", es: "Es el comienzo del año que termina en el escenario del PAC con dos diplomas — y la noche que muchos seniors recuerdan como el momento en que todo se hizo realidad." },
+    ],
+    expect: [
+      { en: "Dinner for seniors and their families", es: "Cena para los seniors y sus familias" },
+      { en: "Words from faculty and class leaders", es: "Palabras de docentes y líderes de la promoción" },
+      { en: "Organized by the Mother's Club", es: "Organizada por el Mother's Club" },
+    ],
+  },
+];
+
+/** Additional traditions referenced by the school's event calendar (no dedicated page yet). */
+export const MORE_TRADITIONS: L[] = [
+  { en: "Halloween Festival", es: "Festival de Halloween" },
+  { en: "Annual Musical", es: "Musical Anual" },
+  { en: "Band Concerts", es: "Conciertos de Banda" },
+  { en: "Art Exhibitions", es: "Exposiciones de Arte" },
+  { en: "Talent Show", es: "Show de Talentos" },
+  { en: "Father's Day", es: "Día del Padre" },
+  { en: "Teacher Appreciation", es: "Día del Maestro" },
+  { en: "Guest Speakers", es: "Conferencistas Invitados" },
+];
+
+export function getTradition(slug: string) {
+  return TRADITIONS.find((t) => t.slug === slug);
+}
