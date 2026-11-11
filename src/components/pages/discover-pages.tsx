@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, Mail, Stethoscope } from "lucide-react";
+import { ArrowRight, Stethoscope } from "lucide-react";
 import { PAGE_PHOTOS } from "@/data/page-photos";
 import { CAMPUS, CAREERS, HISTORY, LEADERSHIP, SAFETY } from "@/data/pages";
 import { PILLARS } from "@/data/nav";
@@ -11,6 +11,7 @@ import { Container, Kicker, Photo, Reveal, Section, SectionHeading, buttonStyles
 import { Gallery, IconCards, PageHero, RelatedLinks, Split, Tabs } from "@/components/sccs/page-kit";
 import { JaguarSpirit, LearnerProfile, MissionValues, SafetyWellness, Timeline } from "@/components/sccs/discover";
 import { FinalCta } from "@/components/sccs/final-cta";
+import { JobBoard } from "@/components/sccs/job-board";
 import { cn } from "@/lib/utils";
 
 function useDiscoverCrumb() {
@@ -296,16 +297,11 @@ export function CareersPage() {
       <Section>
         <Container>
           <IconCards items={CAREERS.why.map((b) => ({ title: tr(b.title), text: tr(b.text) }))} />
-          <div className="mt-16 flex flex-col items-start gap-5 rounded-2xl bg-navy-950 p-8 text-cream sm:flex-row sm:items-center sm:p-10">
-            <div className="flex-1">
-              <h2 className="font-display text-2xl font-semibold text-white sm:text-3xl">{tr(CAREERS.applyTitle)}</h2>
-              <p className="mt-2 max-w-2xl text-cream/75">{tr(CAREERS.applyBody)}</p>
-            </div>
-            <a href="mailto:jobs@sccs.edu.bo" className={buttonStyles.gold}>
-              <Mail className="h-4 w-4" aria-hidden="true" />
-              jobs@sccs.edu.bo
-            </a>
-          </div>
+        </Container>
+      </Section>
+      <Section className="pt-0 sm:pt-0 lg:pt-0">
+        <Container>
+          <JobBoard />
         </Container>
       </Section>
       <Section className="bg-cream/50">

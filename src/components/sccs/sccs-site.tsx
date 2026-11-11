@@ -4,6 +4,7 @@ import { HomeHero } from "../home/hero";
 import {
   AcceptancesHome,
   AdmissionsHome,
+  CareersHome,
   Advantage,
   DualDiplomaHome,
   ExperienceHome,
@@ -31,6 +32,7 @@ export function SccsHome() {
       <AcceptancesHome />
       <LifeHome />
       <AdmissionsHome />
+      <CareersHome />
       <FinalCtaHome />
     </>
   );

@@ -9,3 +9,7 @@ next-env.d.ts
 # Admin portal local fallback storage (development only)
 .data
 public/uploads
+
+# Playwright
+/test-results
+/playwright-report

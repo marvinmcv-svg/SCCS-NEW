@@ -9,6 +9,7 @@ import { EXPERIENCES } from "@/data/experiences";
 import { TRADITIONS } from "@/data/traditions";
 import { INSTAGRAM_POSTS, sortedNews, upcomingEvents } from "@/data/sccs-content";
 import { SITE } from "@/lib/site";
+import { JOBS, JOB_GROUP_LABEL } from "@/data/careers";
 import { cn } from "@/lib/utils";
 import { useLang } from "../sccs/i18n";
 import { Photo, SchoolJaguar, buttonStyles } from "../sccs/sccs-shared";
@@ -803,6 +804,51 @@ export function AdmissionsHome() {
             </li>
           ))}
         </ol>
+      </div>
+    </section>
+  );
+}
+
+/* ───────── Careers: the current openings, one click from the home page ───────── */
+
+export function CareersHome() {
+  const { tr } = useLang();
+  const featured = JOBS.slice(0, 5);
+  return (
+    <section id="careers" className="panel my-4 scroll-mt-24 bg-ivory py-20 sm:py-28">
+      <div className={cn(wrap, "grid gap-12 lg:grid-cols-12 lg:items-center")}>
+        <div className="lg:col-span-5">
+          <p data-rise className="text-sm font-semibold text-crimson-600">
+            {tr({ en: "We're hiring", es: "Estamos contratando" })} · {JOBS.length} {tr({ en: "open roles", es: "vacantes" })}
+          </p>
+          <h2 className={cn(h2, "mt-3 text-navy-800")}>
+            <Words text={tr({ en: "Join the Jaguar team.", es: "Únete al equipo Jaguar." })} />
+          </h2>
+          <p data-rise className="mt-6 text-xl leading-relaxed text-navy-900/80">
+            {tr({
+              en: "Principals, teachers and specialists for the 2027–2028 school year, and a Student Support Services Coordinator now.",
+              es: "Directores, docentes y especialistas para el año escolar 2027–2028, y un(a) Coordinador(a) de Apoyo Estudiantil ahora.",
+            })}
+          </p>
+          <div data-rise className="mt-8">
+            <More href="/discover/careers#openings">{tr({ en: "See all openings", es: "Ver todas las vacantes" })}</More>
+          </div>
+        </div>
+        <ul className="divide-y divide-navy-800/10 lg:col-span-7">
+          {featured.map((j) => (
+            <li key={j.id} data-rise>
+              <Link href="/discover/careers#openings" className="group flex items-center justify-between gap-6 py-5">
+                <span>
+                  <span className="font-display block text-2xl font-semibold text-navy-800 transition-colors group-hover:text-crimson-600 sm:text-[1.7rem]">{tr(j.title)}</span>
+                  <span className="mt-1 block text-sm text-mist">
+                    {tr(JOB_GROUP_LABEL[j.group])} · {tr(j.start)}
+                  </span>
+                </span>
+                <ArrowRight className="h-5 w-5 shrink-0 text-navy-800 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
+              </Link>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );
