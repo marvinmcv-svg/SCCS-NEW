@@ -46,8 +46,21 @@ export function useScrollChoreography(scope: React.RefObject<HTMLElement | null>
         ScrollTrigger.batch(q("[data-rise]"), {
           start: "top 90%",
           once: true,
-          onEnter: (batch) =>
-            gsap.from(batch, { y: 28, autoAlpha: 0, duration: 0.95, ease: EASE_OUT, stagger: 0.08, overwrite: true }),
+          onEnter: (batch) => {
+            // A long jump (an anchor link, a restored scroll position) can deliver dozens of
+            // elements at once, most of them already above the screen. Those just appear;
+            // only what is on screen rises, and the stagger is capped so nothing waits long.
+            const onScreen = batch.filter((el) => el.getBoundingClientRect().bottom > 0);
+            if (!onScreen.length) return;
+            gsap.from(onScreen, {
+              y: 28,
+              autoAlpha: 0,
+              duration: 0.95,
+              ease: EASE_OUT,
+              stagger: Math.min(0.08, 0.5 / onScreen.length),
+              overwrite: true,
+            });
+          },
         });
 
         q("[data-clip]").forEach((el) => {

@@ -29,7 +29,10 @@ test.describe("Home page", () => {
     await careers.scrollIntoViewIfNeeded();
     await expect(careers).toContainText("We're hiring · 8 open roles");
     await expect(careers.getByText("Elementary School Principal")).toBeVisible();
-    await careers.getByRole("link", { name: "See all openings" }).click();
+    // Centre the link first so the fixed header cannot sit on top of it.
+    const seeAll = careers.getByRole("link", { name: "See all openings" });
+    await seeAll.evaluate((el) => el.scrollIntoView({ block: "center", behavior: "instant" }));
+    await seeAll.click();
     await expect(page).toHaveURL(/\/discover\/careers#openings$/);
     await expect(page.getByRole("heading", { name: "Current openings" })).toBeVisible();
   });
