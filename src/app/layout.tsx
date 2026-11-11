@@ -44,7 +44,7 @@ const jsonLd = {
   alternateName: "SCCS",
   description,
   foundingDate: SITE.founded,
-  url: SITE.url,
+  url: SITE.schoolUrl,
   telephone: "+591-3-3530808",
   email: SITE.email,
   address: {

@@ -19,6 +19,17 @@
   --color-cream: #f5f4ef;
   /* Page ground: a pale wash of the brand navy. Cards sit on it in ivory. */
   --color-tint: #ebebf5;
+
+  /* ── Colina-style design system, mapped to the SCCS palette ──
+     Each field is a pale tint with a darker ink of the same hue. */
+  --color-field: #ebebf5;        /* primary field: page, hero, footer      (spec: mint)   */
+  --color-field-ink: #34347a;    /* ink on the primary field               (spec: sage)   */
+  --color-rose: #f3d3d8;         /* secondary field                         (spec: sky)    */
+  --color-rose-ink: #961a2a;     /* ink on the secondary field              (spec: teal)   */
+  --color-card: #fcf8f1;         /* bento card surface                      (spec: cream)  */
+  --color-slate: #6b6980;        /* labels, grey boxes, menus, overlays     (spec: warm grey) */
+  --color-grey-50: #f7f7f9;
+  --color-grey-100: #f2f2f5;
   --color-charcoal: #1a1a1a;
   --color-mist: #5d5f72;
 
@@ -31,11 +42,12 @@
   --color-border: #e2e0d8;
   --color-input: #e2e0d8;
   --color-ring: #F8A724;
-  --color-card: #ffffff;
+  
 
   --radius: 0.75rem;
+  --radius-card: clamp(16px, 2.083vw, 34px);
 
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", var(--font-inter), "Helvetica Neue", Arial, sans-serif;
   --font-serif: var(--font-fraunces), Georgia, serif;
 
   --ease-signature: cubic-bezier(0.22, 1, 0.36, 1);
@@ -66,10 +78,10 @@
   }
 }
 
-/* Display type: the same clean grotesk as the body, set tight and heavy. */
+/* Display type: the same clean grotesk as the body, set tight. */
 @utility font-display {
   font-family: var(--font-sans);
-  letter-spacing: -0.035em;
+  letter-spacing: -0.02em;
 }
 
 /* An inset, rounded panel that floats on the tinted page ground. */
@@ -258,3 +270,181 @@
 @keyframes cc-chat { 0%, 100% { transform: rotate(0deg); } 25% { transform: rotate(1.8deg); } 75% { transform: rotate(-1.8deg); } }
 @keyframes cc-talk { 0% { transform: scaleY(0.35); } 100% { transform: scaleY(1.05); } }
 @keyframes cc-sup { 0%, 55%, 100% { transform: rotate(0deg) translateY(0); } 18% { transform: rotate(-4deg) translateY(-2px); } 34% { transform: rotate(1deg) translateY(0.4px); } }
+
+
+/* ════════════════════════════════════════════════════════════════════════════
+   Colina-style design system (see docs in src/components/colina/README.md)
+   One typeface, a few weights; sizes are fluid (designed on a 1440px canvas).
+   ════════════════════════════════════════════════════════════════════════════ */
+:root {
+  --fs-display: clamp(40px, 4.167vw, 84px);
+  --fs-card-hero: clamp(30px, 3.889vw, 76px);
+  --fs-h2: clamp(30px, 3.333vw, 64px);
+  --fs-h2-sm: clamp(22px, 2.778vw, 52px);
+  --fs-card-text: clamp(22px, 2.5vw, 46px);
+  --fs-subnav: clamp(20px, 2.083vw, 38px);
+  --fs-body: clamp(17px, 1.667vw, 30px);
+  --fs-button: clamp(15px, 1.458vw, 26px);
+  --fs-label: clamp(14px, 1.389vw, 24px);
+  --fs-small: clamp(14px, 1.25vw, 22px);
+  --fs-nav: clamp(14px, 1.111vw, 19px);
+  --fs-th: clamp(11px, 0.972vw, 16px);
+
+  --gutter-page: 6.597vw;
+  --gutter-grid: 4.167vw;
+  --gap-grid: 1.389vw;
+  --nav-h: max(60px, 4.167vw);
+
+  --grad-cta: linear-gradient(240deg, var(--color-amber-400) 0, var(--color-amber-600) 100%);
+
+  /* Navigation tint: follows the section under the bar (set on <body data-menu>). */
+  --nav-bg: rgb(235 235 245 / 0.8);
+  --nav-ink: var(--color-field-ink);
+}
+@media (max-width: 767px) {
+  :root {
+    --fs-display: 8.33vw;
+    --fs-card-hero: 7.78vw;
+    --fs-h2: 7.33vw;
+    --fs-h2-sm: 4.86vw;
+    --fs-card-text: 4.58vw;
+    --fs-body: 4.67vw;
+    --fs-button: max(14px, 3.6vw);
+    --fs-label: max(13px, 3.2vw);
+    --fs-small: max(13px, 3.125vw);
+    --fs-th: max(11px, 2.95vw);
+    --gutter-page: 5.33vw;
+    --gutter-grid: 4.34vw;
+    --gap-grid: 3.47vw;
+    --nav-h: 56px;
+    --radius-card: 3.472vw;
+  }
+}
+
+body[data-menu="field"]  { --nav-bg: rgb(235 235 245 / 0.8); --nav-ink: var(--color-field-ink); }
+body[data-menu="rose"]   { --nav-bg: rgb(243 211 216 / 0.8); --nav-ink: var(--color-rose-ink); }
+body[data-menu="lgrey"]  { --nav-bg: rgb(247 247 249 / 0.8); --nav-ink: #14143a; }
+body[data-menu="grey"]   { --nav-bg: rgb(107 105 128 / 0.85); --nav-ink: #fff; }
+body[data-menu="navy"]   { --nav-bg: rgb(20 20 58 / 0.8); --nav-ink: #fff; }
+body[data-menu="card"]   { --nav-bg: rgb(252 248 241 / 0.85); --nav-ink: var(--color-field-ink); }
+body[data-submenu]       { --nav-bg: rgb(107 105 128 / 0.85); --nav-ink: #fff; }
+
+/* ── Type roles ─────────────────────────────────────────────────────────── */
+@utility t-display { font-size: var(--fs-display); font-weight: 700; line-height: 0.95; letter-spacing: -0.02em; }
+@utility t-card-hero { font-size: var(--fs-card-hero); font-weight: 300; line-height: 1.1; letter-spacing: -0.01em; }
+@utility t-h2 { font-size: var(--fs-h2); font-weight: 650; line-height: 1; letter-spacing: -0.015em; }
+@utility t-h2-sm { font-size: var(--fs-h2-sm); font-weight: 400; line-height: 1.2; }
+@utility t-card-text { font-size: var(--fs-card-text); font-weight: 300; line-height: 1.1; }
+@utility t-body { font-size: var(--fs-body); line-height: 1.25; }
+@utility t-label { font-size: var(--fs-label); font-weight: 500; }
+@utility t-small { font-size: var(--fs-small); line-height: 1.4; }
+@utility t-th { font-size: var(--fs-th); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
+
+/* ── Buttons ────────────────────────────────────────────────────────────── */
+/* 1. The one loud button: the amber gradient pill. */
+@utility btn-cta {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.5em;
+  min-height: 44px; padding: 0.694vw 2.083vw; padding-block: max(10px, 0.694vw); padding-inline: max(24px, 2.083vw);
+  border-radius: 999px; background: var(--grad-cta); color: var(--color-navy-950);
+  font-size: var(--fs-button); font-weight: 600; line-height: 1.2;
+  transition: background 0.3s;
+  &:hover { background: var(--color-amber-400); }
+}
+/* 2. Outline pill: takes the ink of the section it sits on, fills on hover. */
+@utility btn-outline {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.4em;
+  min-height: 44px; padding: 0 max(22px, 2.083vw); border: 1px solid currentColor; border-radius: max(20px, 1.389vw);
+  font-size: var(--fs-button); font-weight: 500; line-height: 2;
+  transition: color 0.3s, background 0.3s;
+  &:hover { background: var(--btn-hover-bg, var(--color-field-ink)); color: var(--btn-hover-ink, var(--color-field)); border-color: var(--btn-hover-bg, var(--color-field-ink)); }
+}
+/* 3. Pill on photographs: white outline, fills white on hover. */
+@utility btn-media {
+  display: inline-flex; align-items: center; gap: 0.6em;
+  min-height: 44px; padding: max(8px, 0.694vw) max(22px, 2.083vw) max(8px, 0.694vw) max(26px, 2.6vw);
+  border: 1px solid #fff; border-radius: 999px; color: #fff;
+  font-size: var(--fs-button); font-weight: 500;
+  transition: color 0.5s, background 0.5s;
+  &:hover { background: #fff; color: #000; }
+}
+
+/* Nav link underline that grows from the centre. */
+@utility link-grow {
+  position: relative;
+  &::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: 0.15em; height: 1px; background: currentColor;
+    transform: scaleX(0); opacity: 0; transition: opacity 0.3s, transform 0.3s;
+  }
+  &:hover::after, &:focus-visible::after, &[data-active="true"]::after, &[aria-expanded="true"]::after { transform: scaleX(1); opacity: 1; }
+}
+
+/* "Eyebrow with rule": small text followed by a line that fills the block. */
+@utility eyebrow-rule {
+  display: flex; align-items: center; gap: 0.75em; width: max(220px, 17.4vw);
+  font-size: var(--fs-small);
+  &::after { content: ""; flex: 1; height: 1px; background: currentColor; }
+}
+
+/* Bento card surface: big radius, no border, no shadow. */
+@utility card {
+  border-radius: var(--radius-card); background: var(--color-card); overflow: hidden; position: relative;
+}
+
+/* Page-load fades (body gets data-loaded once hydrated). */
+.fade { opacity: 0; transition: opacity 0.73s; }
+.fade-15 { transition-delay: 0.15s; }
+.fade-25 { transition-delay: 0.25s; }
+body[data-loaded] .fade { opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .fade { opacity: 1; } }
+
+/* Mega-menu shapes: drop in from above, staggered. */
+.mega-shape { transform: translateY(-200%); opacity: 0; transition: transform 0.51s, opacity 0.1s; }
+[data-open="true"] .mega-shape { transform: none; opacity: 1; }
+[data-open="true"] .mega-shape-circle { transition-delay: 0.2s; }
+[data-open="true"] .mega-shape-combined { transition-delay: 0.4s; }
+[data-open="true"] .mega-shape-square { transition-delay: 0.5s; }
+[data-open="true"] .mega-shape-triangle { transition-delay: 0.6s; }
+
+/* Hamburger "squeeze" into an X. */
+.burger span { display: block; height: 2px; width: 100%; background: currentColor; border-radius: 2px;
+  transition: transform 0.1s cubic-bezier(0.215, 0.61, 0.355, 1) 0.14s, opacity 0.1s; }
+.burger span + span { margin-top: 5px; }
+.burger[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.burger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.burger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* ── Bento grid (§4.2): 4 columns on desktop, 2 on phones ─────────────── */
+.bento {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: 22vw;
+  gap: var(--gap-grid);
+  padding: 0 var(--gutter-grid);
+  margin-bottom: var(--gap-grid);
+  grid-template-areas:
+    "k k k k" "k k k k"
+    "e e j j" "e e j j"
+    "c c d d" "c c d d"
+    "f g l l" "h i l l"
+    "m m n n" "m m n n";
+}
+@media (max-width: 767px) {
+  .bento {
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: 45vw;
+    grid-template-areas:
+      "k k" "k k" "j j" "j j" "c c" "c c" "d d" "d d" "l l" "l l"
+      "e e" "e e" "f g" "h i" "m m" "m m" "n n" "n n";
+  }
+}
+
+/* ── "Learn more" modal (§5.1) ────────────────────────────────────────── */
+@keyframes modal-overlay-in { from { opacity: 0; } to { opacity: 0.8; } }
+@keyframes modal-panel-in { from { opacity: 0; transform: translateY(40%) scaleY(1.3); } to { opacity: 1; transform: none; } }
+@keyframes modal-close-in { from { opacity: 0; } to { opacity: 1; } }
+.modal-overlay[data-state="open"] { animation: modal-overlay-in 0.71s cubic-bezier(0.48, 0, 0.12, 1) forwards; }
+.modal-panel[data-state="open"] { animation: modal-panel-in 0.31s ease-out both; }
+.modal-close { animation: modal-close-in 0.3s 0.3s both; }
+@media (prefers-reduced-motion: reduce) {
+  .modal-panel[data-state="open"] { animation: modal-close-in 0.2s both; }
+}

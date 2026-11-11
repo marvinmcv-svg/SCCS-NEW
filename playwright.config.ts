@@ -4,7 +4,7 @@ const PORT = Number(process.env.E2E_PORT ?? 3200);
 
 /**
  * End-to-end tests against a production build.
- * Run: npm run build && npm run test:e2e
+ * Run: npm run test:e2e:build && npm run test:e2e
  */
 export default defineConfig({
   testDir: "./e2e",

@@ -6,9 +6,9 @@ test.describe("Home page", () => {
     await page.goto("/");
     await expect(page).toHaveTitle(/Santa Cruz Cooperative School/);
     await expect(page.getByRole("heading", { level: 1 })).toContainText("Home of the Jaguars");
-    await expect(page.getByRole("link", { name: "Apply Now" }).first()).toHaveAttribute("href", "/admissions#inquire");
+    await expect(page.locator("#top").getByRole("link", { name: "Book a Campus Tour" })).toHaveAttribute("href", "/admissions#inquire");
     await expect(page.getByRole("heading", { name: "An accredited American international school" })).toBeVisible();
-    await expect(page.getByRole("heading", { name: "The SCCS Advantage" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "The SCCS Advantage" })).toBeAttached();
     await expect(page.locator("#stats")).toContainText("go on to university");
     await expectNoHorizontalScroll(page);
   });
@@ -42,5 +42,57 @@ test.describe("Home page", () => {
     await page.goto("/");
     await switchToSpanish(page);
     await expect(page.getByRole("heading", { level: 1 })).toContainText("El Hogar de los Jaguars");
+  });
+
+  test("feature boxes open and close their Learn more modal", async ({ page, errors }) => {
+    void errors;
+    await page.goto("/");
+    // The Dual-Diploma box; let its scroll reveal finish before clicking.
+    const box = page.locator("#learning [data-rise]").filter({ has: page.getByRole("heading", { name: "The Dual-Diploma Advantage" }) });
+    const learnMore = box.getByRole("button", { name: "Learn more" });
+    await learnMore.evaluate((el) => el.scrollIntoView({ block: "center", behavior: "instant" }));
+    await page.waitForTimeout(1200);
+    await learnMore.click();
+    const modal = page.getByTestId("learn-more-modal");
+    await expect(modal).toBeVisible();
+    await expect(modal.getByRole("heading", { name: "The Dual-Diploma Advantage" })).toBeVisible();
+    await expect(modal).toContainText("Bolivian Bachillerato en Humanidades");
+    await page.keyboard.press("Escape");
+    await expect(modal).toHaveCount(0);
+  });
+
+  test("the nav re-tints to the section under it", async ({ page, errors }) => {
+    void errors;
+    await page.goto("/");
+    const expectTintAt = async (id: string, tint: string) => {
+      await page.evaluate((id) => {
+        const el = document.getElementById(id)!;
+        window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY + 30, behavior: "instant" });
+      }, id);
+      await expect.poll(() => page.evaluate(() => document.body.dataset.menu)).toBe(tint);
+    };
+    await expectTintAt("stats", "field");
+    await expectTintAt("matriculation", "navy");
+    await expectTintAt("careers", "rose");
+    await expectTintAt("admissions", "field");
+  });
+
+  test("the nav logo waits until the hero logo has scrolled away", async ({ page, errors }) => {
+    void errors;
+    await page.goto("/");
+    const navLogo = page.locator("header").getByRole("link", { name: /home/ });
+    await expect(navLogo).toHaveCSS("opacity", "0");
+    await page.evaluate(() => window.scrollTo({ top: 1200, behavior: "instant" }));
+    await expect(navLogo).toHaveCSS("opacity", "1");
+  });
+
+  test("social preview image points at this site", async ({ page }) => {
+    await page.goto("/");
+    const og = await page.locator('meta[property="og:image"]').first().getAttribute("content");
+    // Built with `npm run test:e2e:build`, the site's own address is the test server.
+    const origin = new URL(page.url()).origin;
+    expect(og).toBe(`${origin}/images/sccs/campus-gardens.jpg`);
+    const res = await page.request.get(og!);
+    expect(res.status()).toBe(200);
   });
 });

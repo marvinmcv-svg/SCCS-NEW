@@ -196,7 +196,7 @@ export function Section({
   dark?: boolean;
 }) {
   return (
-    <section id={id} className={cn("scroll-mt-28 py-16 sm:py-20 lg:py-28", dark && "bg-navy-950 text-cream", className)}>
+    <section id={id} data-color={dark ? "navy" : undefined} className={cn("scroll-mt-28 py-16 sm:py-20 lg:py-28", dark && "bg-navy-950 text-cream", className)}>
       {children}
     </section>
   );

@@ -52,8 +52,8 @@ test.describe("Site navigation", () => {
       await menu.getByRole("button", { name: /Discover SCCS/ }).click();
       await menu.getByRole("link", { name: "Work at SCCS" }).click();
     } else {
-      await page.getByRole("navigation", { name: "Primary" }).getByRole("link", { name: "Discover SCCS" }).hover();
-      await page.getByRole("navigation", { name: "Primary" }).getByRole("link", { name: /Work at SCCS/ }).click();
+      await page.getByRole("navigation", { name: "Primary" }).getByRole("button", { name: "Discover SCCS" }).click();
+      await page.getByRole("navigation", { name: "Discover SCCS" }).getByRole("link", { name: "Work at SCCS" }).click();
     }
     await expect(page).toHaveURL(/\/discover\/careers$/);
     await expect(page.getByTestId("job-card").first()).toBeVisible();
@@ -64,5 +64,17 @@ test.describe("Site navigation", () => {
     await page.goto("/contact");
     await page.locator("footer#footer").getByRole("link", { name: "Work at SCCS" }).click();
     await expect(page).toHaveURL(/\/discover\/careers$/);
+  });
+
+  test("the mega-menu opens on click and closes with Escape", async ({ page, errors }) => {
+    test.skip(isMobile(page), "desktop navigation only");
+    void errors;
+    await page.goto("/");
+    const trigger = page.getByRole("navigation", { name: "Primary" }).getByRole("button", { name: "Admissions" });
+    await trigger.click();
+    await expect(trigger).toHaveAttribute("aria-expanded", "true");
+    await expect(page.getByRole("navigation", { name: "Admissions" }).getByRole("link", { name: "Inquire & Visit" })).toBeVisible();
+    await page.keyboard.press("Escape");
+    await expect(trigger).toHaveAttribute("aria-expanded", "false");
   });
 });

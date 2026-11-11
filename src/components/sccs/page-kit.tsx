@@ -10,7 +10,7 @@ import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { useStaticMotion } from "@/lib/use-static-motion";
 import { cn, EASE } from "@/lib/utils";
 import { useLang } from "./i18n";
-import { Container, Kicker, Photo, Reveal } from "./sccs-shared";
+import { Kicker, Photo, Reveal } from "./sccs-shared";
 import { EASE_OUT, Words, gsap, useGSAP } from "../home/motion";
 
 export type Crumb = { href: string; label: string };
@@ -20,16 +20,16 @@ export function Breadcrumbs({ items, dark = true }: { items: Crumb[]; dark?: boo
   const all = [{ href: "/", label: t.page.home }, ...items];
   return (
     <nav aria-label={t.page.breadcrumb}>
-      <ol className={cn("flex flex-wrap items-center gap-1.5 text-xs", dark ? "text-white/65" : "text-mist")}>
+      <ol className={cn("flex flex-wrap items-center gap-1.5 text-xs", dark ? "text-white/65" : "text-slate")}>
         {all.map((c, i) => (
           <li key={c.href + i} className="flex items-center gap-1.5">
             {i > 0 && <Sep className="h-3 w-3 opacity-60" aria-hidden="true" />}
             {i === all.length - 1 ? (
-              <span aria-current="page" className={dark ? "text-amber-400" : "text-navy-800"}>
+              <span aria-current="page" className={dark ? "text-amber-400" : "text-field-ink"}>
                 {c.label}
               </span>
             ) : (
-              <Link href={c.href} className="hover:text-amber-400">
+              <Link href={c.href} className={dark ? "hover:text-amber-400" : "hover:text-field-ink"}>
                 {c.label}
               </Link>
             )}
@@ -66,35 +66,35 @@ export function PageHero({
       mm.add("(prefers-reduced-motion: no-preference)", () => {
         gsap.from("[data-word]", { yPercent: 115, duration: 1.1, ease: EASE_OUT, stagger: 0.05, delay: 0.1 });
         gsap.from("[data-page-rise]", { y: 22, autoAlpha: 0, duration: 0.9, ease: EASE_OUT, stagger: 0.08, delay: 0.35 });
-        gsap.fromTo("[data-page-media] img", { scale: 1.14 }, { scale: 1, duration: 2.4, ease: EASE_OUT });
-        gsap.to("[data-page-media]", { yPercent: 12, ease: "none", scrollTrigger: { trigger: root.current, start: "top top", end: "bottom top", scrub: true } });
+        gsap.from("[data-page-media]", { y: "6vw", scaleY: 1.12, autoAlpha: 0, duration: 0.9, ease: "power2.out", delay: 0.15, clearProps: "transform" });
       });
       return () => mm.revert();
     },
     { scope: root },
   );
+  // The Colina "cover": the page title on the field colour, and the photograph as a
+  // rounded card that sits on the bottom edge.
   return (
-    <section ref={root} className={cn("relative isolate flex items-end overflow-hidden bg-navy-950", tall ? "min-h-[88svh]" : "min-h-[72svh]")}>
-      <div data-page-media className="absolute inset-0 -z-20">
-        <Photo photo={photo} priority className="absolute inset-0" sizes="100vw" imgClassName={imgPosition} />
-      </div>
-      {/* The photograph keeps its own brightness; shade sits only under the navigation and the words.
-          On phones the words cover most of the photo, so the shade rises from the bottom instead. */}
-      <div className="absolute inset-x-0 top-0 -z-10 h-40 bg-gradient-to-b from-navy-950/70 to-transparent" aria-hidden="true" />
-      <div className="absolute inset-0 -z-10 bg-gradient-to-t from-navy-950/95 via-navy-950/70 via-55% to-navy-950/10 sm:hidden" aria-hidden="true" />
-      <div className="absolute inset-0 -z-10 hidden bg-[radial-gradient(ellipse_110%_95%_at_0%_100%,rgba(20,20,58,0.92),rgba(20,20,58,0.62)_45%,rgba(20,20,58,0.12)_80%)] sm:block" aria-hidden="true" />
-      <Container className="pb-14 pt-40 [text-shadow:0_1px_18px_rgba(20,20,58,0.45)] sm:pb-20">
+    <section
+      ref={root}
+      data-color="field"
+      className={cn(
+        "relative bg-field text-field-ink md:flex md:items-stretch md:justify-between md:pt-[max(84px,min(9.03vw,13vh))]",
+        tall ? "md:min-h-[88svh]" : "md:min-h-[72svh]",
+      )}
+    >
+      <div className="flex flex-col px-[var(--gutter-page)] pb-10 pt-[calc(var(--nav-h)+8vw)] md:w-[55%] md:pb-[max(40px,4vw)] md:pr-[2vw] md:pt-0">
         <div data-page-rise>
-          <Breadcrumbs items={crumbs} />
+          <Breadcrumbs items={crumbs} dark={false} />
         </div>
-        <div data-page-rise className="mt-6">
-          <Kicker dark>{kicker}</Kicker>
-        </div>
-        <h1 className="font-display mt-3 max-w-5xl text-balance text-[2.6rem] font-semibold leading-[1] tracking-[-0.03em] text-white sm:text-6xl lg:text-7xl">
+        <p data-page-rise className="t-label mt-[max(20px,2vw)] text-slate">
+          {kicker}
+        </p>
+        <h1 className="t-display mt-[0.3em] text-balance">
           <Words text={title} />
         </h1>
         {lede && (
-          <p data-page-rise className="mt-6 max-w-2xl text-lg leading-relaxed text-white/90 sm:text-xl">
+          <p data-page-rise className="t-body mt-[0.8em] max-w-[38ch] text-field-ink/90">
             {lede}
           </p>
         )}
@@ -103,7 +103,13 @@ export function PageHero({
             {children}
           </div>
         )}
-      </Container>
+      </div>
+      <div
+        data-page-media
+        className="relative mx-[var(--gutter-page)] aspect-[4/3] overflow-hidden rounded-[var(--radius-card)] bg-navy-900 md:mx-0 md:mr-[var(--gutter-grid)] md:aspect-auto md:w-[38%] md:rounded-b-none"
+      >
+        <Photo photo={photo} priority className="absolute inset-0" sizes="(min-width:768px) 40vw, 100vw" imgClassName={imgPosition} />
+      </div>
     </section>
   );
 }

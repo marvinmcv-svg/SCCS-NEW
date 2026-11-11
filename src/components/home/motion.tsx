@@ -18,7 +18,8 @@ const MOTION_OK = "(prefers-reduced-motion: no-preference)";
  * the markup stays declarative and React keeps ownership of the DOM:
  *
  * - `data-words`     each word rises out of its own mask (use <Words>)
- * - `data-rise`      rises 28px and fades in; siblings entering together stagger 80ms
+ * - `data-rise`      rises from 10vw below, un-squashing from scaleY(1.2), and fades in;
+ *                    the second of a pair lags 0.15s
  * - `data-clip`      a picture opens from an inset mask while settling from 1.15x
  * - `data-parallax`  drifts against the scroll; the value is the travel in percent
  * - `data-count`     counts from 0 to its value when it enters (`data-decimals` for 3.15)
@@ -52,14 +53,11 @@ export function useScrollChoreography(scope: React.RefObject<HTMLElement | null>
             // only what is on screen rises, and the stagger is capped so nothing waits long.
             const onScreen = batch.filter((el) => el.getBoundingClientRect().bottom > 0);
             if (!onScreen.length) return;
-            gsap.from(onScreen, {
-              y: 28,
-              autoAlpha: 0,
-              duration: 0.95,
-              ease: EASE_OUT,
-              stagger: Math.min(0.08, 0.5 / onScreen.length),
-              overwrite: true,
-            });
+            // The signature "abox" reveal: rise from 10vw below and un-squash from scaleY(1.2).
+            // The second card of a pair lags 0.15s; long batches share at most half a second.
+            const stagger = Math.min(0.15, 0.5 / onScreen.length);
+            gsap.from(onScreen, { y: "10vw", scaleY: 1.2, duration: 0.71, ease: "power2.out", stagger, overwrite: true, clearProps: "transform" });
+            gsap.from(onScreen, { autoAlpha: 0, duration: 0.51, ease: "none", stagger });
           },
         });
 

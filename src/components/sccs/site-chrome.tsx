@@ -8,6 +8,7 @@ import { Header } from "./header";
 import { Footer } from "./footer";
 import { CommandPalette } from "./command-palette";
 import { Carlita } from "./carlita";
+import { useLoaded, useSectionTint } from "@/lib/use-section-tint";
 
 export function SiteChrome({ children }: { children: React.ReactNode }) {
   const { t } = useLang();
@@ -15,6 +16,9 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
   const main = useRef<HTMLElement>(null);
   // Scroll choreography for every page; re-scanned when the route changes.
   useScrollChoreography(main, [pathname]);
+  // The nav re-tints to the section under it; `.fade` entrances start after hydration.
+  useSectionTint([pathname]);
+  useLoaded();
   // The admin portal has its own chrome.
   if (pathname?.startsWith("/admin")) return <>{children}</>;
   return (

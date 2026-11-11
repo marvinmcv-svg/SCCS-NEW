@@ -1,39 +1,24 @@
 "use client";
 
-import { HomeHero } from "../home/hero";
-import {
-  AcceptancesHome,
-  AdmissionsHome,
-  CareersHome,
-  Advantage,
-  DualDiplomaHome,
-  ExperienceHome,
-  FinalCtaHome,
-  JourneyHome,
-  LifeHome,
-  MatriculationHome,
-  Safety,
-  Stats,
-  TraditionsMarquee,
-} from "../home/sections";
+import { CareersHome, Features, Hero, JoinInfo, SafetySplit, Stats } from "../colina/home";
+import { AcceptancesHome, ExperienceHome, JourneyHome, LifeHome, MatriculationHome, TraditionsMarquee } from "../home/sections";
 
+/** The home page, top to bottom, in the Colina layout (see src/components/colina). */
 export function SccsHome() {
   return (
     <>
-      <HomeHero />
+      <Hero />
       <Stats />
-      <Advantage />
-      <Safety />
-      <DualDiplomaHome />
+      <Features />
+      <SafetySplit />
       <JourneyHome />
       <ExperienceHome />
       <TraditionsMarquee />
       <MatriculationHome />
       <AcceptancesHome />
       <LifeHome />
-      <AdmissionsHome />
       <CareersHome />
-      <FinalCtaHome />
+      <JoinInfo />
     </>
   );
 }
